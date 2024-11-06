@@ -1,0 +1,92 @@
+.main {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    margin: 0 auto;
+}
+
+.title {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 27px;
+    line-height: 48px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-bottom: 24px;
+}
+
+
+
+.inputRow {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.textRow {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.text {
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 20px;
+    line-height: 36px;
+    text-transform: uppercase;
+    color: #000000;
+}
+
+.googleButton,
+.gitButton , .logiButton{
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border: 1px solid #000;
+    border-radius: 100px;
+    font-family: 'ROBOTO';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 36px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+
+    color: #000000;
+    background-color: #fff;
+    filter: drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.3));
+
+}
+
+.googleButton img,
+.gitButton img {
+    width: 35px;
+    height: 35px;
+}
+
+.gitButton {
+    background-color: #000;
+    color: #fff;
+}
+.logiButton{
+    justify-content: center;
+    color: #fff;
+    background: #0b7dcf;
+    border: 1px solid #0B7DCF;
+}

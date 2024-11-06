@@ -1,0 +1,177 @@
+.articlePage {
+    display: flex;
+/*     height: calc(100vh - 80px);
+    overflow-y: auto; */
+}
+
+.sidebar {
+    width: 300px;
+    height: 100vh;
+    background-color: #888;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.sectionTitle,
+.sectionName,
+.navigationTitle {
+    color: white;
+    
+    font-family: Arial, sans-serif;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+
+
+}
+
+.sectionTitle {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.sectionName {
+
+    font-weight: normal;
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.navigationTitle {
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.navigation {
+    width: 100%;
+    text-align: center;
+}
+
+    .navigation li {
+        list-style: none;
+        margin: 10px 0;
+    }
+
+.navButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.articleTitle {
+    display: inline;
+    color: black;
+/*     margin-left: 10px; */
+margin: 0;
+    margin-bottom: 100px;
+    font-family: Arial, sans-serif;
+}
+
+.articleText {
+    color: black;
+    text-align: left;
+    margin-top: 50px;
+
+
+    font-family: Arial, sans-serif;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+
+
+color: #2A3C42;
+
+
+}
+
+.commentsSection {
+    margin-top: 40px;
+/*     padding: 20px; */
+    background-color: #f9f9f9;
+    /*border-top: 1px solid #ddd;*/
+    width: 90%;
+   /*  margin-left: 80px; */
+}
+
+.commentForm {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.commentInput {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submitButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    height: 45px;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+    margin-left: 10px;
+    border-radius: 20px;
+}
+
+    .submitButton:hover {
+        background-color: #0056b3;
+    }
+
+.comment {
+    border-top: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+    .comment p {
+        margin: 5px 0;
+    }
+
+.hidden {
+    display: none;
+}
+
+.buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+/*     padding-left: 20px; */
+    margin-bottom: 20px;
+}
+
+.homeButton,
+.toggleButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.homeButton {
+    margin-right: 1010px;
+}
+
+.toggleIcon,
+.homeIcon {
+    width: 30px;
+    height: auto;
+}

@@ -1,0 +1,34 @@
+.allBooksList {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    grid-gap: 30px 145px;
+    margin: 0 auto;
+    max-width: 100%; 
+    overflow: hidden; 
+    padding: 25px 0;
+}
+
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item img {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+}
+
+@media (max-width: 800px) {
+    .allBooksList {
+        grid-template-columns: repeat(2, 1fr); /* 2 колонки на меньших экранах */
+    }
+}
+
+@media (max-width: 500px) {
+    .allBooksList {
+        grid-template-columns: 1fr; /* 1 колонка на очень маленьких экранах */
+    }
+}

@@ -1,0 +1,77 @@
+
+[
+    {
+        "directory_id": 1,
+        "directoryName":"Назва 1",
+        "img_link": "/assets/images/api/puthon1.png",
+        "articles": [
+            { "article_id": "a1", "name": "Стаття 1" },
+            { "article_id": "a2", "name": "Стаття 2" },
+            { "article_id": "a3", "name": "Стаття 3" },
+            { "article_id": "a4", "name": "Стаття 4" }
+        ]
+        
+    },
+    {
+        "directory_id": 2,
+        "directoryName":"Назва 1",
+        "img_link": "Посилання",
+        "articles": [
+            { "article_id": "b1", "name": "Стаття 1" },
+            { "article_id": "b2", "name": "Стаття 2" }
+        ]
+    },
+    {
+        "directory_id": 3,
+        "directoryName":"Назва 1",
+        "img_link": "Посилання",
+        "articles": [
+            { "article_id": "c1", "name": "Стаття 1" },
+            { "article_id": "c2", "name": "Стаття 2" }
+        ]
+    },
+    {
+        "directory_id": 4,
+        "directoryName":"Назва 1",
+        "img_link": "Посилання",
+        "articles": [
+            { "article_id": "d1", "name": "Стаття 1" },
+            { "article_id": "d2", "name": "Стаття 2" }
+        ]
+    },  {
+        "directory_id": 5,
+        "directoryName":"Назва 1",
+        "img_link": "Посилання",
+        "articles": [
+            { "article_id": "e1", "name": "Стаття 1" },
+            { "article_id": "e2", "name": "Стаття 2" }
+        ]
+    }, 
+     {
+        "directory_id": 6,
+        "directoryName":"Назва 1",
+        "img_link": "Посилання",
+        "articles": [
+            { "article_id": "f1", "name": "Стаття 1" },
+            { "article_id": "f2", "name": "Стаття 2" }
+        ]
+    },
+    {
+        "directory_id": 7,
+        "directoryName":"Назва 1",
+        "img_link": "Посилання",
+        "articles": [
+            { "article_id": "g1", "name": "Стаття 1" },
+            { "article_id": "g2", "name": "Стаття 2" }
+        ]
+    },
+    {
+        "directory_id": 8,
+        "directoryName":"Назва 1",
+        "img_link": "Посилання",
+        "articles": [
+            { "article_id": "h1", "name": "Стаття 1" },
+            { "article_id": "h2", "name": "Стаття 2" }
+        ]
+    }
+]

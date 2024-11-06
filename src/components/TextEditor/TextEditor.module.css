@@ -1,0 +1,9 @@
+.editor ul, .editor ol{
+    margin-left: 0;
+    padding-left: 0;
+    font-size: 18px;
+}
+.editor ul li{
+    list-style-type: none !important;
+    margin-left: 0;
+}

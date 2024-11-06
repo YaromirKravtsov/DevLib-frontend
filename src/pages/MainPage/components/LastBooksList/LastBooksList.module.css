@@ -1,0 +1,35 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    row-gap: 30px;
+}
+
+.title {
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 34px;
+    color: #000000;
+}
+
+.customNext,
+.customPrev {
+    z-index: 100;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 100%;
+    cursor: pointer;
+
+}
+
+.customPrev {
+    transform: translate(0px, -200%);
+}
+
+.customNext {
+    transform: translate(-100%, -200%);
+    right: 0;
+}

@@ -1,0 +1,28 @@
+/* BookmarkIcon.module.css */
+
+.bookmarkIcon {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    right: 50px;
+    transition: color 0.3s, transform 0.3s;
+  }
+  
+  .bookmarkIcon svg {
+    color: #F8F8F8;
+    stroke: black;
+    stroke-width: 40px;
+    font-size: 3rem;
+    transform: scale(1, 1.2);
+    transition: color 0.3s, transform 0.3s;
+  }
+  
+  .bookmarkIcon:active svg {
+    transform: scale(1.1, 1.3);
+  }
+  
+  .bookmarked svg {
+    color: black; /* Залишається чорним, якщо закладка додана */
+  }
+  

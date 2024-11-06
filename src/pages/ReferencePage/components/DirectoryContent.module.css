@@ -1,0 +1,57 @@
+
+.ReferencePage {
+    padding: 20px;
+}
+
+h1 {
+    font-size: 40px; 
+    font-weight: normal; 
+    margin-left: 180px;
+    color: #0B7DCF;
+    margin-top: 30px;
+}
+
+h3 {
+    font-size: 32px; 
+    margin-top: 50px; 
+    margin-left: 180px;
+    font-weight: semi-bold;
+}
+
+ol {
+    list-style-type:decimal; 
+    font-size: 26px;
+    padding: 0; 
+    margin-left: 200px;
+    margin-top: 50px;
+    display: grid; 
+    grid-template-columns: repeat(3, minmax(500px, 2fr)); 
+    gap: 30px; /* Пробел между колонками */
+}
+
+li {
+    color: #0B7DCF; 
+    padding: 2px; 
+    text-align:left; 
+    transition: color 0.3s;
+}
+
+li:hover {
+    color: #084b7b;
+}
+
+@media (max-width: 1024px) {
+    ol {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media (max-width: 600px) {
+    ol {
+        grid-template-columns: 1fr;
+    }
+
+    h1, h3 { 
+        text-align: left; 
+    }
+}

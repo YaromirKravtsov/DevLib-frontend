@@ -1,0 +1,43 @@
+.loader {
+    width: 100%;
+    max-height: 100%;
+    max-height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .loaderSmal{
+    height: 150px;
+    max-height: 150px;
+    min-height: 150px;
+  }
+  .loaderSmal .LoaderIcon{
+    width: 50px;
+    height: 50px;
+  }
+  .LoaderIcon {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%; /* Делает круглым */
+    animation: rotate 5s infinite linear;
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+  @media (max-width:600px) {
+
+
+    .LoaderIcon {
+      width: 100px;
+      height: 100px;
+    }
+  }

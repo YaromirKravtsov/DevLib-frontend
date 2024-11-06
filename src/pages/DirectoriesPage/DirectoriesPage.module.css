@@ -1,0 +1,15 @@
+.directories {
+    padding-top: 25px !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    /*     padding: 25px; */
+    column-gap: 200px;
+}
+
+.title {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 10px;
+}

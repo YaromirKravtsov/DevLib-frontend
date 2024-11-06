@@ -1,0 +1,14 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+}
+
+.text {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    color: #000000;
+}

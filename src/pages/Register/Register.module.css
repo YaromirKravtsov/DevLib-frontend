@@ -1,0 +1,57 @@
+.main {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    margin: 0 auto;
+}
+
+.title {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 27px;
+    line-height: 48px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-bottom: 24px;
+}
+
+
+
+.inputRow {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+
+.button {
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    height: 50px;
+    border-radius: 100px;
+    justify-content: center;
+    color: #fff;
+    background: #0b7dcf;
+    border: 1px solid #0B7DCF;
+
+
+
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 43px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #FFFFFF;
+
+
+}

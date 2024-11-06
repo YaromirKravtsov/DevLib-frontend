@@ -1,0 +1,67 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    column-gap: 60px;
+    align-items: center;
+}
+
+.title {
+    width: 195px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+ 
+    color: #000000;
+}
+
+.input {
+    width: 530px;
+    height: 50px;
+    background-color: #D9D9D9;
+    border: 1px solid #767676;
+    border-radius: 100px;
+    padding-left: 15px;
+
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    
+
+    color: #767676;
+
+}
+
+.file{
+    display: flex;
+    flex-direction: row;
+   /*  justify-content: center; */
+   align-items: center;
+   column-gap: 10px;
+
+   cursor: pointer;
+}
+
+.fileText{
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 28px;
+text-align: center;
+
+color: #767676;
+
+
+}
+
+.fileText span{
+    font-size: 20px;
+}
+
+.fileText .size{
+    font-size: 16px;
+}

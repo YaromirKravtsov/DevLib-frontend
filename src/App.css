@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+section {
+    scroll-margin-top: 70px;
+}
+input:focus {
+    outline: none;
+}
+
+
+@media (max-width:770px) {
+    section {
+        scroll-margin-top: 50px;
+    }
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+li {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: initial;
+}
+
+button{
+    border: none;
+    background: inherit;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100vw;
+    max-width: 100vw;
+    
+}
+
+
+/* Container */
+.container {
+    width: 100%;
+    padding: 0 100px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1399.98px) {
+    .container {
+        padding: 0 25px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .container {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .container {
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .container {
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .container {
+        padding: 0 5px;
+    }
+}
+
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+
+.custom-text{
+    
+}
+
+.custom-text ol{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 40px;
+}
+.custom-text ol li{
+    color: #000;
+}
+
+.custom-text ul{
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+    margin-left: 20px;
+}
+.custom-text ul li{
+    list-style-type: disc;
+    color: #000;
+}
+.custom-text blockquote{
+    font-style: italic;
+    color: #555;
+    padding: 10px 20px;
+    margin: 20px 0;
+    border-left: 5px solid #555;
+    background-color: #f9f9f9;
+}

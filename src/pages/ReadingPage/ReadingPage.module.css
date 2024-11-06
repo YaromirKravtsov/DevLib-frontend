@@ -1,0 +1,156 @@
+.container {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f5f5f5; 
+    height: 100vh;
+}
+
+.addNoteSection {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.noteInput {
+    width: 150%;
+    padding: 10px;
+    height: 130px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    resize: none;
+    border: 1px solid #555;
+}
+
+.addButton {
+    width: 60%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color:#0B7DCF;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.pageContent {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+.bookPage {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.8;
+    text-align: left;
+}
+
+.highlightedText {
+    background-color: #45beff;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.notesList {
+    display: flex; 
+    flex-direction: column;
+    align-items: stretch; 
+    padding: 20px;
+}
+.notesList h2 {
+    margin-left: -50px; 
+    margin-top: -20px;
+    padding-left: 0; 
+    text-align: left; 
+}
+
+.noteItem {
+    position: relative; 
+    background-color: white;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 25px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 150%; 
+    box-sizing: border-box;
+    margin-left: -80px;
+    border: 1px solid #555;
+}
+
+.deleteButton {
+    position: absolute; 
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: bbb; 
+    color: #555;
+    border: 1px solid #555;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.deleteButton:hover {
+    background-color: #f0f0f0; 
+    color: #333; 
+    border-color: #bbb; 
+}
+
+
+.noteQuote {
+    font-style: italic;
+    color: #555;
+    padding-left: 10px;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+}
+.pageNavigation {
+    margin-top: 20px;
+    text-align: center; 
+}
+
+.pageNavigation button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pageNavigation button:disabled {
+    background-color: #ccc; 
+    cursor: not-allowed;
+}
+
+.pageNavigation button:hover:not(:disabled) {
+    background-color: #0056b3; 
+}

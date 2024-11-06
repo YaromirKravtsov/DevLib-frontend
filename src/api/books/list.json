@@ -1,0 +1,42 @@
+[
+    {
+        "book_id": 1,
+        "bookName": "Назва книги",
+        "book_photo": "link"
+    },
+    {
+        "book_id": 2,
+        "bookName": "Назва книги",
+        "book_photo": "link"
+    },
+    {
+        "book_id": 3,
+        "bookName": "Назва книги",
+        "book_photo": "link"
+    },
+    {
+        "book_id": 4,
+        "bookName": "Назва книги",
+        "book_photo": "link"
+    },
+    {
+        "book_id": 5,
+        "bookName": "Назва книги",
+        "book_photo": "link"
+    },
+    {
+        "book_id": 6,
+        "bookName": "Назва книги",
+        "book_photo": "link"
+    },
+    {
+        "book_id": 7,
+        "bookName": "Назва книги",
+        "book_photo": "link"
+    },
+    {
+        "book_id": 8,
+        "bookName": "Назва книги",
+        "book_photo": "link"
+    }
+]
