@@ -1,46 +1,24 @@
-# Getting Started with Create React App
+# Проект Frontend Команди
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Опис Репозиторію
 
-## Available Scripts
+Цей репозиторій призначений для управління та координації розробки фронтенд-проекту. Команда складається з чотирьох учасників, кожен з яких має свої визначені обов'язки. Робочий процес організовано таким чином, щоб забезпечити ефективність та контроль якості коду.
 
-In the project directory, you can run:
+### Задачі Тімліда
+- Відповідає за створення завдань (тикетів) та призначення їх конкретним учасникам команди.
+- Визначає дедлайни для виконання завдань.
+- Після завершення роботи над тикетом проводить перевірку змін.
+- Якщо зміни відповідають вимогам, зливає їх у головну гілку (`master`).
 
-### `npm start`
+## Виконання Завдань
+1. **Створення Тикетів:** Кожне завдання оформлюється як тикет, який створюється тімлідом у системі управління проектом.
+2. **Гілки для Завдань:** Під кожен тикет створюється окрема гілка. Назва гілки повинна чітко відображати зміст завдання, наприклад, `feature/ticket-name` або `bugfix/ticket-id`.
+3. **Завершення Завдання:** Після виконання завдання, виконавець створює коміт, в якому фіксує всі зміни, пов'язані з тикетом. Паралельно з цим, тикет закривається та змінює свій статус на "done".
+4. **Перевірка Тімлідом:** Після завершення роботи над тикетом тімлід проводить повторне тестування. Якщо усі зміни виконані коректно та відповідають вимогам, тімлід зливає гілку із завершеним завданням у `master`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Загальні Правила
+- **Всі коміти повинні бути змістовними та описувати внесені зміни.**
+- **Не допускається пряме внесення змін у гілку `master`.** Всі зміни мають проходити через окремі гілки та перевірку тімлідом.
+- **Комунікація:** Учасники команди повинні регулярно інформувати про статус своїх завдань та звертатись за допомогою в разі необхідності.
+- **Код рев'ю:** Перед злиттям у `master` кожна зміна проходить перевірку тімлідом, що забезпечує якість та стабільність коду.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
