@@ -1,0 +1,124 @@
+.commentContainer {
+  display: flex;
+  margin: 50px 0;
+}
+
+.userIcon {
+  width: 40px; /* Ширина иконки пользователя */
+  height: 40px; /* Высота иконки пользователя */
+  background-color: #ccc; /* Цвет фона для иконки пользователя */
+  border-radius: 50%; /* Круглая форма */
+  margin-right: 10px; /* Отступ справа */
+}
+
+.commentContent {
+  flex-grow: 1; /* Занимает оставшееся пространство */
+  position: relative; /* Для вертикальной линии */
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.userName {
+  font-weight: bold;
+}
+
+.commentDate {
+  font-size: 0.8em;
+  color: gray;
+}
+
+.commentTextContainer {
+  display: flex; /* Используем flex для выравнивания */
+  align-items: flex-start; /* Выравнивание по верхнему краю */
+  margin: 5px 0; /* Отступ сверху и снизу */
+  min-height: 40px;
+}
+
+.verticalLine {
+  width: 2px; 
+  background-color: #ccc;
+  margin-right: 10px; /* Отступ между линией и текстом */
+  height: 100%; /* Установите высоту линии на 100% */
+  min-height: 20px;
+}
+
+.commentText {
+  flex-grow: 1; /* Позволяет тексту занимать оставшееся пространство */
+}
+
+.iconButton {
+  width: 73px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #333;
+  background: #EAEDEF;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.iconButton img.commentIcon {
+  width: 23px;
+  height: 23px;
+}
+
+.iconButton:hover {
+  background: #e0e0e0;
+}
+
+.commentInput {
+  width: 100%;
+  height: 21px; 
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  transition: height 0.3s ease; /* Плавный переход высоты */
+}
+
+.commentInput.expanded {
+  height: 100%; /* Высота при раскрытии */
+}
+
+.commentActions {
+  height: 50px;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+
+.sendButton {
+  background-color: #0B7DCF;
+  color: #fff;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background-color: #D9D9D9;
+  color: #000000;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+.commentInputContainer {
+  margin-top: 30px;
+  position: relative;
+  border: 1px solid #CCCCCC;
+  border-radius: 40px;
+  padding: 15px;
+  background-color: #fff;
+}

@@ -20,6 +20,7 @@ import EditBook from '../../pages/EditBook/EditBook';
 import EditDerectory from '../../pages/EditDerectory/EditDerectory';
 import AddArticle from '../../pages/AddArticle/AddArticle';
 import EditArticle from '../../pages/EditArticle/EditArticle';
+import PostPage from '../../pages/PostPage/PostPage';
 /* import LoginPage from '../../pages/LoginPage/LoginPage';
 import SeatchRealEstate from '../../pages/SeatchRealEstate/SeatchRealEstate'; */
 
@@ -51,7 +52,8 @@ export enum RouteNames {
   ADD_ARTICLE ="/add-article/:articleId",
   EDIT_ARTICLE= "edit-article/:articleId",
   EDIT_DIRECTORY ="/edit-directory/:directoryId",
-  EDIT_BOOK ="/edit-book/:bookId"
+  EDIT_BOOK ="/edit-book/:bookId",
+  POST = "/post/:postId"
 }
 
 
@@ -88,4 +90,5 @@ export const publicRoutes: IRoute[] = [
   { path: RouteNames.BOOK_DETAILS, element: BookDetailsPage },
   { path: RouteNames.READING, element: ReadingPage },
   { path: RouteNames.ARTICLE, element: ArticlePage },
+  { path: RouteNames.POST, element: PostPage },
 ]
