@@ -20,6 +20,7 @@ import EditBook from '../../pages/EditBook/EditBook';
 import EditDerectory from '../../pages/EditDerectory/EditDerectory';
 import AddArticle from '../../pages/AddArticle/AddArticle';
 import EditArticle from '../../pages/EditArticle/EditArticle';
+import EditProfilePage from '../../pages/EditProfilePage/EditProfilePage';
 /* import LoginPage from '../../pages/LoginPage/LoginPage';
 import SeatchRealEstate from '../../pages/SeatchRealEstate/SeatchRealEstate'; */
 
@@ -51,7 +52,8 @@ export enum RouteNames {
   ADD_ARTICLE ="/add-article/:articleId",
   EDIT_ARTICLE= "edit-article/:articleId",
   EDIT_DIRECTORY ="/edit-directory/:directoryId",
-  EDIT_BOOK ="/edit-book/:bookId"
+  EDIT_BOOK ="/edit-book/:bookId",
+  EDIT_PROFILE = "/edit-profile"
 }
 
 
@@ -73,7 +75,7 @@ export const adminRoutes: IRoute[] = [
 export const userRoutes: IRoute[] = [
   { path: RouteNames.BOOK_MARKS, element: BookMarksPage },
   { path: RouteNames.ACCOUNT, element: AccountPage },
-
+  { path: RouteNames.EDIT_PROFILE, element: EditProfilePage },
 ]
 
 // маршруты для всех пользователей, включая как зарегистрированных, так и незарегистрированных  
