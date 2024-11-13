@@ -10,6 +10,7 @@ import MyInput from '../../UI/MyInput/MyInput';
 import LoginService from './api/LoginService';
 import { validateStringFields } from '../../helpers/checkStringFields';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import PasswordResetPopup from './PasswordResetPopup';
 
 
 const CLIENT_ID_GUTHUB = 'Ov23liVP1fdpjqeZ6yPh'
@@ -21,7 +22,8 @@ const LoginPage = () => {
       password: ''
     }); */
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [isResetPopupOpen, setIsResetPopupOpen] = useState<boolean>(false);
 
   const login = useAuthStore(store => store.login)
   const loginWithGoogle = useAuthStore(store => store.loginWithGoogle)
@@ -87,7 +89,7 @@ const LoginPage = () => {
       </div>
 
       <div className={styles.textRow}>
-        <div className={styles.text}>забули пароль ?</div>
+        <div className={styles.text} onClick={() => setIsResetPopupOpen(true)}>забули пароль ?</div>
         <Link to={RouteNames.REGISTER} className={styles.text}>Зарееструватися</Link>
       </div>
 
@@ -111,7 +113,13 @@ const LoginPage = () => {
       </button>
       <button className={styles.logiButton} onClick={handelLogin}>
         Увійти
-      </button>
+          </button>
+
+
+          {/* Відображення попапу для скидання паролю */}
+          {isResetPopupOpen && (
+              <PasswordResetPopup onClose={() => setIsResetPopupOpen(false)} />
+          )}
     </div>
   )
 }

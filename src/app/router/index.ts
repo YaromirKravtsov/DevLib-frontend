@@ -20,8 +20,12 @@ import EditBook from '../../pages/EditBook/EditBook';
 import EditDerectory from '../../pages/EditDerectory/EditDerectory';
 import AddArticle from '../../pages/AddArticle/AddArticle';
 import EditArticle from '../../pages/EditArticle/EditArticle';
+import PasswordForgetReset from '../../pages/PasswordForgetReset/PasswordForgetReset';
+/* import LoginPage from '../../pages/LoginPage/LoginPage';
+import SeatchRealEstate from '../../pages/SeatchRealEstate/SeatchRealEstate'; */
 import EditProfilePage from '../../pages/EditProfilePage/EditProfilePage';
 import TagManager from '../../pages/TagManager/TagManager';
+
 
 
 
@@ -50,6 +54,7 @@ export enum RouteNames {
   ADD_ARTICLE ="/add-article/:articleId",
   EDIT_ARTICLE= "edit-article/:articleId",
   EDIT_DIRECTORY ="/edit-directory/:directoryId",
+  PASSWORDFORGETRESET = "/reset-user-password",
   EDIT_BOOK ="/edit-book/:bookId",
   EDIT_PROFILE = "/edit-profile",
   TAG_MANAGER ="/tag-manager"
@@ -95,5 +100,6 @@ export const publicRoutes: IRoute[] = [
   { path: RouteNames.BOOK_DETAILS, element: BookDetailsPage },
   { path: RouteNames.READING, element: ReadingPage },
   { path: RouteNames.ARTICLE, element: ArticlePage },
-  
+  { path: RouteNames.PASSWORDFORGETRESET, element: PasswordForgetReset },
+
 ]
