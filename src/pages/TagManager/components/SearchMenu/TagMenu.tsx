@@ -50,11 +50,11 @@ const TagMenu = () => {
             <div className={styles.buttonRow}>
                 {editMode && (
                     <BlueButton className={styles.button} onClick={handleEdit}>
-                        Bearbeiten
+                        Зберегти
                     </BlueButton>
                 )}
                 <BlueButton className={styles.button} onClick={handleCreate}>
-                    Erstellen
+                    Створити
                 </BlueButton>
             </div>
         </div>
