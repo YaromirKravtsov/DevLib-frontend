@@ -25,6 +25,7 @@ import PasswordForgetReset from '../../pages/PasswordForgetReset/PasswordForgetR
 import SeatchRealEstate from '../../pages/SeatchRealEstate/SeatchRealEstate'; */
 import EditProfilePage from '../../pages/EditProfilePage/EditProfilePage';
 import TagManager from '../../pages/TagManager/TagManager';
+import PostPage from '../../pages/PostPage/PostPage';
 
 
 
@@ -57,8 +58,8 @@ export enum RouteNames {
   PASSWORDFORGETRESET = "/reset-user-password",
   EDIT_BOOK ="/edit-book/:bookId",
   EDIT_PROFILE = "/edit-profile",
-  TAG_MANAGER ="/tag-manager"
-
+  TAG_MANAGER ="/tag-manager",
+  POST = "/post/:postId"
 }
 
 
@@ -98,7 +99,6 @@ export const publicRoutes: IRoute[] = [
   { path: RouteNames.REFERENCE, element: ReferencePage },
   { path: RouteNames.BOOK_DETAILS, element: BookDetailsPage },
   { path: RouteNames.READING, element: ReadingPage },
-  { path: RouteNames.ARTICLE, element: ArticlePage },
+  { path: RouteNames.POST, element: PostPage },
   { path: RouteNames.PASSWORDFORGETRESET, element: PasswordForgetReset },
-
 ]
