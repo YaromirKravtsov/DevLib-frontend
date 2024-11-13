@@ -12,14 +12,21 @@ const AppRouter = () => {
     const setIsLoadingAuth = useAuthStore(state => state.setIsLoading);
     const setLoggedIn = useAuthStore(state => state.setLoggedIn)
     const checkAuth = useAuthStore(state => state.checkAuth)
-
+    const fetchCheckAuth = async () =>{
+        await checkAuth()
+        await setLoggedIn(false)
+    }
     useEffect(() => {
         /* setLoggedIn(true); // значения обозначающее зарегестрирован ли пользователь 
         setRole('user') // // значения обозначающее роль пользователя
         setIsLoadingAuth(false) */
-        checkAuth()
+        
+        fetchCheckAuth()
     }, [])
 
+    if(isLoading){
+        return <></>
+    }
     return (
         <Routes>
             {role == 'user' &&
