@@ -29,7 +29,7 @@ interface BearState {
 export const useAuthStore = create<BearState>()(
   devtools((set) => ({
     userId: '',
-    loggedIn: false,
+    loggedIn: true,
     setUserId:  (userId: string) => set(() => ({ userId })),
     setLoggedIn: (value: boolean) => set(() => ({ loggedIn: value })),
     role: '',

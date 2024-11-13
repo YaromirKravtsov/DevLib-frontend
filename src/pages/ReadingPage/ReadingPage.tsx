@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHeaderStore } from '../../layouts/Header/store/header';
-import PdfViewer from './components/PdfViewer';
 import BookService from '../BookDetailsPage/api/BookService';
 import styles from './ReadingPage.module.css';
 import { IBookDetails } from '../../models/IBookDetails';
@@ -9,6 +8,7 @@ import SimplePdfViewer from './components/PdfViewer';
 import ReadingPageServce from './api/ReadingPage';
 import { useAuthStore } from '../../app/store/auth';
 import { text } from 'stream/consumers';
+import PdfViewer from '../../components/PdfViewer/PdfViewer';
 
 export interface Note {
     noteId: string;
@@ -20,7 +20,6 @@ const ReadingPage = () => {
     const setHeaderVersion = useHeaderStore((store) => store.setHeaderVersion);
     const [notes, setNotes] = useState<Note[]>([]);
     const [newNote, setNewNote] = useState('');
-/*     const [quote, setQuote] = useState(''); */
     const [pdfUrl, setPdfUrl] = useState<string>('');
     const userId = useAuthStore(store => store.userId)
     const fetchBookDetails = async () => {
@@ -45,7 +44,7 @@ const ReadingPage = () => {
         console.log(data)
         setNotes(data)
     }
-    const createNote = async () =>{
+    const createNote = async () => {
         await ReadingPageServce.createNote({
             bookId: String(bookId),
             userId: userId,
@@ -79,7 +78,7 @@ const ReadingPage = () => {
     }
 
     const handleDeleteNote = (id: string) => {
-   
+
         delteNote(id)
         setNotes(notes.filter((note) => note.noteId !== id));
     };
@@ -89,7 +88,7 @@ const ReadingPage = () => {
             <div className={styles.notesSection}>
                 <h2>Додати нотатки</h2>
                 <div className={styles.addNoteForm}>
-                   {/*  {quote && (
+                    {/*  {quote && (
                         <blockquote className={styles.quote}>
                             {quote}
                         </blockquote>
@@ -109,10 +108,10 @@ const ReadingPage = () => {
                 </div>
             </div>
 
-            <div className={styles.pageContent}>
-                <embed src={pdfUrl} width="800px" height="1000px" />
 
-            </div>
+
+            <PdfViewer file={pdfUrl} />
+
 
             <div className={styles.notesList}>
                 <h2>Ваші нотатки:</h2>

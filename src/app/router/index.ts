@@ -21,9 +21,7 @@ import EditDerectory from '../../pages/EditDerectory/EditDerectory';
 import AddArticle from '../../pages/AddArticle/AddArticle';
 import EditArticle from '../../pages/EditArticle/EditArticle';
 import EditProfilePage from '../../pages/EditProfilePage/EditProfilePage';
-/* import LoginPage from '../../pages/LoginPage/LoginPage';
-import SeatchRealEstate from '../../pages/SeatchRealEstate/SeatchRealEstate'; */
-
+import TagManager from '../../pages/TagManager/TagManager';
 
 
 
@@ -53,7 +51,9 @@ export enum RouteNames {
   EDIT_ARTICLE= "edit-article/:articleId",
   EDIT_DIRECTORY ="/edit-directory/:directoryId",
   EDIT_BOOK ="/edit-book/:bookId",
-  EDIT_PROFILE = "/edit-profile"
+  EDIT_PROFILE = "/edit-profile",
+  TAG_MANAGER ="/tag-manager"
+
 }
 
 
@@ -64,9 +64,10 @@ export const adminRoutes: IRoute[] = [
   { path: RouteNames.ADD_DIRECTORY, element: AddDirectory },
   { path: RouteNames.ADD_ARTICLE, element: AddArticle },
   { path: RouteNames.EDIT_ARTICLE, element: EditArticle },
-
   { path: RouteNames.EDIT_DIRECTORY, element: EditDerectory },
   { path: RouteNames.EDIT_BOOK, element: EditBook },
+  { path: RouteNames.TAG_MANAGER, element: TagManager },
+
   
 
 ]
