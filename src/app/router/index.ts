@@ -20,9 +20,8 @@ import EditBook from '../../pages/EditBook/EditBook';
 import EditDerectory from '../../pages/EditDerectory/EditDerectory';
 import AddArticle from '../../pages/AddArticle/AddArticle';
 import EditArticle from '../../pages/EditArticle/EditArticle';
-/* import LoginPage from '../../pages/LoginPage/LoginPage';
-import SeatchRealEstate from '../../pages/SeatchRealEstate/SeatchRealEstate'; */
-
+import EditProfilePage from '../../pages/EditProfilePage/EditProfilePage';
+import TagManager from '../../pages/TagManager/TagManager';
 
 
 
@@ -51,7 +50,10 @@ export enum RouteNames {
   ADD_ARTICLE ="/add-article/:articleId",
   EDIT_ARTICLE= "edit-article/:articleId",
   EDIT_DIRECTORY ="/edit-directory/:directoryId",
-  EDIT_BOOK ="/edit-book/:bookId"
+  EDIT_BOOK ="/edit-book/:bookId",
+  EDIT_PROFILE = "/edit-profile",
+  TAG_MANAGER ="/tag-manager"
+
 }
 
 
@@ -62,9 +64,10 @@ export const adminRoutes: IRoute[] = [
   { path: RouteNames.ADD_DIRECTORY, element: AddDirectory },
   { path: RouteNames.ADD_ARTICLE, element: AddArticle },
   { path: RouteNames.EDIT_ARTICLE, element: EditArticle },
-
   { path: RouteNames.EDIT_DIRECTORY, element: EditDerectory },
   { path: RouteNames.EDIT_BOOK, element: EditBook },
+  { path: RouteNames.TAG_MANAGER, element: TagManager },
+
   
   
 
@@ -74,7 +77,9 @@ export const adminRoutes: IRoute[] = [
 export const userRoutes: IRoute[] = [
   
   { path: RouteNames.ACCOUNT, element: AccountPage },
+
   { path: RouteNames.BOOK_MARKS, element: BookMarksPage },
+  { path: RouteNames.EDIT_PROFILE, element: EditProfilePage },
 
 ]
 
