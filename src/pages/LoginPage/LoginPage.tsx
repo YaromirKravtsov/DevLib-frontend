@@ -57,8 +57,10 @@ const LoginPage = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const codeParam = urlParams.get("code");
+    if(!codeParam) return;
     try {
        await loginWithGithub(codeParam as string) // Господи, помоги!
+       await   navigate('/')
     } catch (error) {
       console.error("Error fetching access token:", error);
     }
@@ -69,7 +71,7 @@ const LoginPage = () => {
     if (loggedIn) {
       navigate('/')
     }
-  }, [loggedIn])
+  }, [])
   return (
     <div className={styles.main}>
       <div className={styles.title}>Вхід до акаунту</div>

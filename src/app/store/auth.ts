@@ -29,8 +29,8 @@ interface BearState {
 export const useAuthStore = create<BearState>()(
   devtools((set) => ({
     userId: '',
-    loggedIn: true,
-    setUserId:  (userId: string) => set(() => ({ userId })),
+    loggedIn: false,
+    setUserId: (userId: string) => set(() => ({ userId })),
     setLoggedIn: (value: boolean) => set(() => ({ loggedIn: value })),
     role: '',
     setRole: (role: string) => set(() => ({ role })),
@@ -57,8 +57,8 @@ export const useAuthStore = create<BearState>()(
     loginWithGoogle: async (dto: IGoogleRes) => {
       set({ isLoading: true });
       try {
-      const { data } = await AppService.loginGoogle({ userId: dto.clientId, token: dto.credential });
-      const decodedToken: any = jwtDecode(data.token);
+        const { data } = await AppService.loginGoogle({ userId: dto.clientId, token: dto.credential });
+        const decodedToken: any = jwtDecode(data.token);
         set({
           loggedIn: true,
           role: (decodedToken.role == 'Client') ? 'user' : (decodedToken.role == 'Admin') ? 'admin' : '',
@@ -75,8 +75,8 @@ export const useAuthStore = create<BearState>()(
     loginWithGithub: async (code: string) => {
       set({ isLoading: true });
       try {
-      const { data } = await AppService.loginGitHub(code);
-      const decodedToken: any = jwtDecode(data.token);
+        const { data } = await AppService.loginGitHub(code);
+        const decodedToken: any = jwtDecode(data.token);
         set({
           loggedIn: true,
           role: (decodedToken.role == 'Client') ? 'user' : (decodedToken.role == 'Admin') ? 'admin' : '',
@@ -97,13 +97,11 @@ export const useAuthStore = create<BearState>()(
         set({
           loggedIn: true,
           role: (decodedToken.role == 'Client') ? 'user' : (decodedToken.role == 'Admin') ? 'admin' : '',
-          isLoading: false,
-          userId: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+          isLoading: false
         });
       } catch (error: any) {
-        console.error(error);
-      } finally {
-        set({ isLoading: false });
+        console.error(error.response?.data?.message);
+        set({ isLoading: false, loggedIn: false });  // Обязательно сбрасываем isLoading и loggedIn в случае ошибки
       }
     },
     logout: () => {

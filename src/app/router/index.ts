@@ -80,9 +80,8 @@ export const adminRoutes: IRoute[] = [
 
 // маршруты только для пользователя 
 export const userRoutes: IRoute[] = [
-  
+  { path: RouteNames.LOGIN, element: LoginPage },
   { path: RouteNames.ACCOUNT, element: AccountPage },
-
   { path: RouteNames.BOOK_MARKS, element: BookMarksPage },
   { path: RouteNames.EDIT_PROFILE, element: EditProfilePage },
 
