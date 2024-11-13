@@ -4,51 +4,39 @@
 }
 
 .userIcon {
-  width: 40px; /* Ширина иконки пользователя */
-  height: 40px; /* Высота иконки пользователя */
-  background-color: #ccc; /* Цвет фона для иконки пользователя */
-  border-radius: 50%; /* Круглая форма */
-  margin-right: 10px; /* Отступ справа */
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0; 
 }
 
 .commentContent {
-  flex-grow: 1; /* Занимает оставшееся пространство */
-  position: relative; /* Для вертикальной линии */
-}
-
-.commentHeader {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.userName {
-  font-weight: bold;
-}
-
-.commentDate {
-  font-size: 0.8em;
-  color: gray;
+  flex-grow: 1;
 }
 
 .commentTextContainer {
-  display: flex; /* Используем flex для выравнивания */
-  align-items: flex-start; /* Выравнивание по верхнему краю */
-  margin: 5px 0; /* Отступ сверху и снизу */
-  min-height: 40px;
+  display: flex;
+  align-items: flex-start;
+  margin: 5px 0;
+  position: relative;
 }
 
 .verticalLine {
-  width: 2px; 
+  align-self: stretch;
+  width: 2px;
   background-color: #ccc;
-  margin-right: 10px; /* Отступ между линией и текстом */
-  height: 100%; /* Установите высоту линии на 100% */
+  margin-right: 10px;
   min-height: 20px;
+  flex-shrink: 0; 
 }
 
 .commentText {
-  flex-grow: 1; /* Позволяет тексту занимать оставшееся пространство */
+  flex-grow: 1;
+  word-break: break-word;
 }
+
 
 .iconButton {
   width: 73px;
@@ -81,11 +69,11 @@
   outline: none;
   resize: none;
   font-size: 16px;
-  transition: height 0.3s ease; /* Плавный переход высоты */
+  transition: height 0.3s ease; 
 }
 
 .commentInput.expanded {
-  height: 100%; /* Высота при раскрытии */
+  height: 100%; 
 }
 
 .commentActions {

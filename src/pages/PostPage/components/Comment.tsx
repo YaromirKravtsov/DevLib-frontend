@@ -5,7 +5,7 @@ import { ICommentItem } from '../../../app/models/ICommentItem';
 
 interface ICommentProps {
   comment: ICommentItem;
-  onAddReply: (commentId: string, content: string) => void; // Function to add reply
+  onAddReply: (commentId: string, content: string) => void;
 }
 
 const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
@@ -17,31 +17,25 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
 
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  // Function to adjust the textarea height automatically
   useEffect(() => {
     if (textAreaRef.current) {
-      textAreaRef.current.style.height = 'auto'; // Reset height before calculation
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Adjust to content
+      textAreaRef.current.style.height = 'auto';
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
     }
-  }, [newReply]); // Re-run whenever newReply changes
+  }, [newReply]);
 
   const handleAddReply = () => {
     if (newReply.trim()) {
       onAddReply(comment.CommentId, newReply);
       setNewReply('');
       setIsInputFocused(false);
-      resetTextareaHeight(); // Reset height to 21px after submission
+      resetTextareaHeight();
     }
   };
 
   const toggleRepliesVisibility = () => {
-    if (isRepliesVisible) {
-      setIsRepliesVisible(false);
-      setIsReplyFieldVisible(false);
-    } else {
-      setIsRepliesVisible(true);
-      setIsReplyFieldVisible(true);
-    }
+    setIsRepliesVisible(!isRepliesVisible);
+    setIsReplyFieldVisible(!isReplyFieldVisible);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -51,13 +45,12 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
   const handleCancel = () => {
     setNewReply('');
     setIsInputFocused(false);
-    resetTextareaHeight(); // Reset height when cancelling
+    resetTextareaHeight();
   };
 
-  // Reset textarea height to initial value (21px)
   const resetTextareaHeight = () => {
     if (textAreaRef.current) {
-      textAreaRef.current.style.height = '21px'; // Set height back to 21px
+      textAreaRef.current.style.height = '21px';
     }
   };
 
@@ -89,18 +82,8 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
               />
               {isInputFocused && (
                 <div className={styles.commentActions}>
-                  <button
-                    className={styles.sendButton}
-                    onClick={handleAddReply}
-                  >
-                    Відправити
-                  </button>
-                  <button
-                    className={styles.cancelButton}
-                    onClick={handleCancel}
-                  >
-                    Відмінити
-                  </button>
+                  <button className={styles.sendButton} onClick={handleAddReply}>Відправити</button>
+                  <button className={styles.cancelButton} onClick={handleCancel}>Відмінити</button>
                 </div>
               )}
             </div>
