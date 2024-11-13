@@ -1,0 +1,132 @@
+.forum {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .forumHeader {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Вирівнює кнопки праворуч */
+    margin-bottom: 12px;
+    width: 100%;
+  }
+  
+  .filterButton, .newPostButton {
+    padding: 4px 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    width: auto;
+    color: #A4A4A4; /* Додає сірий колір тексту */
+    text-decoration: none;
+  }
+  
+  /* Стиль для кнопки з трикутником */
+  .filterButton span {
+    display: inline-block;
+    margin-left: 4px;
+    transition: transform 0.3s ease; /* Анімація обертання */
+  }
+  
+  .filterButton.open span {
+    transform: rotate(180deg); /* Обертання трикутника */
+  }
+  
+  .newPostButton {
+    background-color: #fff;
+    margin-left: 8px;
+  }
+  
+  .dropdownMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 140px;
+    padding: 6px 0;
+    margin-top: 6px;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s, transform 0.3s ease;
+  }
+  
+  /* Випадаюче меню з'являється */
+  .dropdownMenu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .dropdownItem {
+    padding: 6px 12px;
+    font-size: 0.8em;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .dropdownItem:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .postsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+  }
+  
+  .post {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .authorImg {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+  
+  .authorName {
+    font-weight: bold;
+  }
+  
+  .dateTime {
+    color: #888;
+    font-size: 0.8em;
+  }
+  
+  .postName {
+    margin-top: 6px;
+    font-size: 1em;
+  }
+  
+  .commentsQuantity {
+    color: #888;
+    font-size: 0.8em;
+    margin-top: 4px;
+  }
+  

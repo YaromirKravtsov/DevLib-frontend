@@ -4,7 +4,7 @@ import LoginPage from '../../pages/LoginPage/LoginPage';
 import MainPage from '../../pages/MainPage/MainPage';
 import BookMarksPage from '../../pages/BookMarksPage/BookMarksPage';
 import AddRecord from '../../pages/AddBook/AddBook';
-import Forum from '../../pages/Forum/Forum';
+import Forum from '../../pages/ForumPage/ForumPage';
 import UsersAdmin from '../../pages/UsersAdmin/UsersAdmin';
 import BooksPage from '../../pages/BooksPage/BooksPage';
 import DirectoriesPage from '../../pages/DirectoriesPage/DirectoriesPage';
@@ -66,13 +66,15 @@ export const adminRoutes: IRoute[] = [
   { path: RouteNames.EDIT_DIRECTORY, element: EditDerectory },
   { path: RouteNames.EDIT_BOOK, element: EditBook },
   
+  
 
 ]
 
 // маршруты только для пользователя 
 export const userRoutes: IRoute[] = [
-  { path: RouteNames.BOOK_MARKS, element: BookMarksPage },
+  
   { path: RouteNames.ACCOUNT, element: AccountPage },
+  { path: RouteNames.BOOK_MARKS, element: BookMarksPage },
 
 ]
 
@@ -88,4 +90,5 @@ export const publicRoutes: IRoute[] = [
   { path: RouteNames.BOOK_DETAILS, element: BookDetailsPage },
   { path: RouteNames.READING, element: ReadingPage },
   { path: RouteNames.ARTICLE, element: ArticlePage },
+  
 ]
