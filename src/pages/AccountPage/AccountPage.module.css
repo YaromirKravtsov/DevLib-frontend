@@ -3,6 +3,7 @@
     padding-left: 30px;
     padding-right: 30px;
     height: 100vh;
+    font-family: 'Hahmlet', sans-serif;
 }
 
 .sidebar {
@@ -60,6 +61,8 @@
     align-items: center;
     margin-top: 20px;
     justify-content: center;
+    margin-bottom: -15px;
+    padding-bottom: 0px;
 }
 
 .username {
@@ -70,7 +73,7 @@
 }
 
 .editButton {
-    margin-top: 5px;
+    margin-top: 13px;
     padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
@@ -128,7 +131,121 @@
 
 .separator {
     border: none;
-    height: 1px;
+    height: 2px;
     background-color: #d3d3d3;
     margin: 8px 0;
+}
+
+/* Стилі форми редагування профілю */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+.label {
+    font-size: 18px;
+    color: black;
+    font-weight:600;
+    margin-bottom: 10px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 2px solid #d3d3d3;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #f7f7f7;
+    transition: border-color 0.3s;
+}
+
+.input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Кнопки "Скасувати" та "Зберегти" */
+
+.buttonContainer {
+    position: absolute; /* Размещает контейнер с кнопками снизу формы */
+    bottom: 10px; /* Отступ от низа формы */
+    right: 20px; /* Отступ от правого края формы */
+    display: flex;
+    gap: 10px; /* Отступ между кнопками */
+    
+}
+
+.cancelButton, .saveButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 3px solid #0B7DCF;
+    transition: background-color 0.3s;
+    width: 150px;
+}
+
+.cancelButton {
+    color: #0B7DCF;
+}
+
+.cancelButton:hover {
+    background-color: #f0f0f0;
+}
+
+.saveButton {
+    background-color: #0B7DCF;
+    color: white;
+    border: none;
+}
+
+.saveButton:hover {
+    background-color: #0056b3;
+}
+
+/* Заголовок сторінки */
+
+.title {
+    font-size: 24px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 30px;
+    background-color: #e3f2fd;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.smallSeparator{
+    border: none;
+    height: 2px;
+    width: 300px;
+    background-color: #d3d3d3;
+}
+.passwordContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #3a3a3a;
+    transition: color 0.3s;
+}
+
+.eyeIcon:hover {
+    color: #007bff;
 }

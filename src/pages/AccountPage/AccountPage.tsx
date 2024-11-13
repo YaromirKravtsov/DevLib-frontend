@@ -1,10 +1,12 @@
 ﻿import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useHeaderStore } from '../../layouts/Header/store/header';
 import styles from './AccountPage.module.css';
 
 const AccountPage: React.FC = () => {
     const [username] = useState("Ім'я");
     const setHeaderVersion = useHeaderStore(store => store.setHeaderVersion);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setHeaderVersion('minimized');
@@ -12,6 +14,7 @@ const AccountPage: React.FC = () => {
     }, []);
 
     const handlePhotoChange = () => alert("Змінити фото");
+    const handleEditProfile = () => navigate('/edit-profile');
 
     return (
         <div className={styles.profilePage}>
@@ -23,7 +26,8 @@ const AccountPage: React.FC = () => {
                 <div className={styles.usernameSection}>
                     <h2 className={styles.username}>{username}</h2>
                 </div>
-                <button className={styles.editButton}>
+                <hr className={styles.smallSeparator} />
+                <button className={styles.editButton} onClick={handleEditProfile}>
                     Редагувати профіль
                 </button>
             </div>
