@@ -1,8 +1,9 @@
+import { IReplyItem } from "./IReplyItem";
 export interface ICommentItem {
-    CommentId: string;
-    UserId: string;
-    Content: string;
-    PostId: string;
-    DateTime: string;
-    Replies: ICommentItem[];
+    commentId: string;
+    userId: string;
+    text: string;
+    postId: string;
+    dateTime?: string;
+    replies: IReplyItem[];
 }

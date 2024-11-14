@@ -1,11 +1,13 @@
 import { ICommentItem } from "../../../app/models/ICommentItem";
 
 export interface IPostItem {
-    PostId: string;
-    UserId: string;
-    IsArticle: boolean;
-    Title: string;
-    Text: string;
-    comments?: ICommentItem[];
-    DateTime: string;
+    postId: string;
+    userId: string;
+    postName: string;
+    text: string;
+    comments: ICommentItem[];
+    dateTime: string;
+    authorName: string;
+    authorImg: string;
+    commentsQuantity: [];
 }

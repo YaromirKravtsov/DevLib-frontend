@@ -1,90 +1,124 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from './PostPage.module.css';
-import { FaArrowLeft, FaHeart } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import { useHeaderStore } from '../../layouts/Header/store/header';
+import commentIcon from '../../assets/images/icons/comment.png';
 import { IPostItem } from './models/IPostItem';
 import { ICommentItem } from '../../app/models/ICommentItem';
-import postsData from './api/posts/list.json';
-import Comment from './components/Comment';
-import commentIcon from '../../assets/images/icons/comment.png';
+import PostPageService from './api/PostPageService';
+import { useAuthStore } from '../../app/store/auth'; 
+import Comment from '../../components/Comment/Comment';
+
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); 
+  const year = date.getFullYear();
+  return `${day}.${month}.${year}`;
+};
+
+const useUserId = () => {
+  return useAuthStore(state => state.userId);
+};
+
+const testComments: ICommentItem[] = [
+    {
+        commentId: '1',
+        userId: 'user1',
+        postId: '1',
+        text: 'Это первый тестовый комментарий',
+        dateTime: '2024-11-10T10:00:00Z',
+        replies: [
+        ]
+    },
+    {
+        commentId: '2',
+        userId: 'user3',
+        postId: '1',
+        text: 'Это второй тестовый комментарий',
+        dateTime: '2024-11-11T12:00:00Z',
+        replies: []
+    }
+];
 
 const PostPage: React.FC = () => {
   const setHeaderVersion = useHeaderStore(store => store.setHeaderVersion);
   const [post, setPost] = useState<IPostItem | null>(null);
-  const [comments, setComments] = useState<ICommentItem[]>([]);
-  const [newComment, setNewComment] = useState<string>('');
-  const [likes, setLikes] = useState<number>(348);
-  const [liked, setLiked] = useState<boolean>(false);
+  const { postId } = useParams<{ postId: string }>();
+  const [comments, setComments] = useState<ICommentItem[]>(testComments);
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-  
+  const [loading, setLoading] = useState(true);
+  const [newCommentText, setNewCommentText] = useState<string>("");
+  const userId = useUserId(); 
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchedPost = postsData[0];
-    setPost(fetchedPost);
-    setComments(fetchedPost.comments || []);
-  }, []);
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const { data } = await PostPageService.getPost(postId!);
+        setPost(data);
+        // setComments(data.comments || []);
+      } catch (error) {
+        console.error("Ошибка при загрузке поста:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPosts();
+  }, [postId]);
 
   useEffect(() => {
     setHeaderVersion('minimized');
   }, [setHeaderVersion]);
 
   const handleBack = () => {
-    window.history.back();
-  };
-  
-  const handleAddComment = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (newComment.trim()) {
-      const newCommentObj: ICommentItem = {
-        CommentId: Math.random().toString(36).substring(2, 9),
-        UserId: "1",
-        Content: newComment,
-        DateTime: new Date().toISOString(),
-        Replies: [],
-        PostId: '1'
-      };
-      setComments([...comments, newCommentObj]);
-      setNewComment('');
-      setIsInputFocused(false);
-    }
-  };
-
-  const handleAddReply = (commentId: string, content: string) => {
-    const newReply: ICommentItem = {
-      CommentId: Math.random().toString(36).substring(2, 9),
-      UserId: "1",
-      PostId: post?.PostId || "", 
-      Content: content,
-      DateTime: new Date().toISOString(),
-      Replies: [] 
-    };
-
-    const addReplyToComment = (comments: ICommentItem[], commentId: string): ICommentItem[] => {
-      return comments.map(comment => {
-        if (comment.CommentId === commentId) {
-          return { ...comment, Replies: [...comment.Replies || [], newReply] };
-        }
-        if (comment.Replies) {
-          return { ...comment, Replies: addReplyToComment(comment.Replies, commentId) };
-        }
-        return comment;
-      });
-    };
-
-    setComments(prevComments => addReplyToComment(prevComments, commentId));
-  };
-
-  const handleLike = () => {
-    setLikes(prev => liked ? prev - 1 : prev + 1);
-    setLiked(!liked);
+    navigate('/forum');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewComment(e.target.value);
+    setNewCommentText(e.target.value);
   };
 
-  if (!post) return <p>Loading...</p>;
+  const handleAddComment = () => {
+    if (!newCommentText.trim()) return;
+
+    const newComment: ICommentItem = {
+      commentId: (comments.length + 1).toString(),
+      userId: userId,
+      postId: postId!,
+      text: newCommentText,
+      dateTime: new Date().toISOString(),
+      replies: []
+    };
+
+    setComments(prevComments => [...prevComments, newComment]);
+    setNewCommentText('');
+  };
+
+  const handleAddReply = (commentId: string, text: string) => {
+    const newReply: ICommentItem = {
+      commentId: Math.random().toString(36).substring(2, 9),
+      userId: "1",
+      postId: post?.postId || "", 
+      text: text,
+      dateTime: new Date().toISOString(),
+      replies: [] 
+    };
+
+    setComments(prevComments => 
+      prevComments.map(comment => 
+        comment.commentId === commentId 
+          ? { ...comment, replies: [...comment.replies, newReply] } 
+          : comment
+      )
+    );
+  };
+
+  if (loading) return <p>Загрузка...</p>;
+  if (!post) return <p>Пост не найден.</p>;
 
   return (
     <div className={styles.postContainer}>
@@ -94,42 +128,38 @@ const PostPage: React.FC = () => {
         </button>
         <div className={styles.userIcon}></div>
         <div className={styles.userInfo}>
-          <span><b>{post.UserId}</b> • {post.DateTime}</span>
+          <span><b>{post.authorName}</b> • {formatDate(post.dateTime)}</span>
         </div>
       </div>
-      
-      <h2 className={styles.postTitle}>{post.Title}</h2> <p className={styles.postContent}>{post.Text}</p>
-      
+
+      <h2 className={styles.postTitle}>{post.postName}</h2> 
+      <p className={styles.postContent}>{post.text}</p>
+
       <div className={styles.postFooter}>
         <button className={styles.iconButton} onClick={() => {}}>
-          <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {comments.length}
-        </button>
-        <button className={`${styles.iconButton} ${liked ? styles.liked : ''}`} onClick={handleLike}>
-          <FaHeart color={liked ? "red" : "gray"} /> {likes}
+          <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {post.commentsQuantity}
         </button>
       </div>
-      
-      <div className={`${styles.commentInputContainer} ${isInputFocused ? styles.focused : ''}`}>
+
+      <div className={styles.commentInputContainer}>
         <textarea
           ref={textAreaRef}
-          className={styles.commentInput}
-          placeholder="Додати коментар"
-          value={newComment}
-          onFocus={() => setIsInputFocused(true)}
+          value={newCommentText}
           onChange={handleInputChange}
-          style={{ height: 'auto' }} />
+          onFocus={() => setIsInputFocused(true)}
+          placeholder="Напишите комментарий..."
+          className={styles.commentInput}
+        />
         {isInputFocused && (
           <div className={styles.commentActions}>
-            <button
-              className={styles.sendButton}
-              onClick={handleAddComment}>Відправити</button>
-            <button className={styles.cancelButton} onClick={() => { setNewComment(''); setIsInputFocused(false); }}>Відмінити</button>
+            <button onClick={handleAddComment} className={styles.sendButton}>Отправить</button>
+            <button onClick={() => setIsInputFocused(false)} className={styles.cancelButton}>Отмена</button>
           </div>
         )}
       </div>
-      
+
       {comments.map((comment) => (
-        <Comment key={comment.CommentId} comment={comment} onAddReply={handleAddReply} />
+        <Comment key={comment.commentId} comment={comment} onAddReply={handleAddReply} />
       ))}
     </div>
   );

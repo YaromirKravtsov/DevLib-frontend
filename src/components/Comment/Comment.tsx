@@ -1,15 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react'; 
 import styles from './Comment.module.css';
-import commentIcon from '../../../assets/images/icons/comment.png';
-import { ICommentItem } from '../../../app/models/ICommentItem';
+import commentIcon from '../../assets/images/icons/comment.png';
+import { ICommentItem } from '../../app/models/ICommentItem';
+import { IReplyItem } from '../../app/models/IReplyItem';
+import Reply from '../Reply/Reply';
 
 interface ICommentProps {
-  comment: ICommentItem;
-  onAddReply: (commentId: string, content: string) => void;
+  comment?: ICommentItem;
+  onAddReply: (commentId: string, text: string) => void;
 }
 
 const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
-  const formattedDate = new Date(comment.DateTime).toLocaleString();
+  const formattedDate = new Date((comment as ICommentItem).dateTime as string).toLocaleString();
   const [newReply, setNewReply] = useState<string>('');
   const [isRepliesVisible, setIsRepliesVisible] = useState<boolean>(false);
   const [isReplyFieldVisible, setIsReplyFieldVisible] = useState<boolean>(false);
@@ -20,13 +22,14 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = 'auto';
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Corrected interpolation
     }
   }, [newReply]);
 
   const handleAddReply = () => {
+    console.log(comment);
     if (newReply.trim()) {
-      onAddReply(comment.CommentId, newReply);
+      onAddReply((comment as ICommentItem).commentId, newReply);
       setNewReply('');
       setIsInputFocused(false);
       resetTextareaHeight();
@@ -59,16 +62,16 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
       <div className={styles.userIcon}></div>
       <div className={styles.commentContent}>
         <div className={styles.commentHeader}>
-          <span className={styles.userName}><b>{comment.UserId}</b></span> ・<span className={styles.commentDate}>{formattedDate}</span>
+          <span className={styles.userName}><b>{(comment as ICommentItem).userId}</b></span> ・<span className={styles.commentDate}>{formattedDate}</span>
         </div>
         <div className={styles.commentTextContainer}>
           <div className={styles.verticalLine}></div>
-          <div className={styles.commentText}>{comment.Content}</div>
+          <div className={styles.commentText}>{(comment as ICommentItem).text}</div>
         </div>
 
         <div className={styles.replyActions}>
           <button className={styles.iconButton} onClick={toggleRepliesVisibility}>
-            <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {comment.Replies?.length || 0}
+            <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {(comment as ICommentItem).replies?.length || 0}
           </button>
           {isReplyFieldVisible && (
             <div className={styles.commentInputContainer}>
@@ -90,11 +93,12 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
           )}
         </div>
 
-        {comment.Replies && comment.Replies.length > 0 && isRepliesVisible && (
+        {(comment as ICommentItem).replies && (comment as ICommentItem).replies.length > 0 && isRepliesVisible && (
           <div className={styles.repliesContainer}>
-            {comment.Replies.map(reply => (
-              <Comment key={reply.CommentId} comment={reply} onAddReply={onAddReply} />
+            {(comment as ICommentItem).replies.map(reply => (
+              <Reply key={reply.commentId} reply={reply} onAddReply={handleAddReply} commentId={(comment as ICommentItem).commentId} />
             ))}
+
           </div>
         )}
       </div>
