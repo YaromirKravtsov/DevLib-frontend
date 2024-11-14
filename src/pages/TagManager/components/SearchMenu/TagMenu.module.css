@@ -1,0 +1,54 @@
+.main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 30px;
+}
+
+.button{
+    width: 140px;
+}
+
+.buttonRow{
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+}
+
+.input{
+    width: 300px;
+}
+@media(max-width:750px) {
+    .input{
+        width: 200px !important;
+        height: 35px !important;
+    }
+    .button{
+        width: 120px;
+        height: 35px ;
+        min-height:35px ;
+    }
+}
+
+
+@media(max-width:470px) {
+    .input{
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 35px !important;
+    }
+    .button{
+        width: 120px;
+        height: 35px ;
+        min-height:35px ;
+    }
+    .main{
+        row-gap: 25px;
+    }.buttonRow{
+        width: 100%;
+    }
+    .button{
+        width: 45%;
+    }
+}
