@@ -9,6 +9,8 @@ import { IDirectoryItem } from '../../models/IDirectoryItem';
 const DirectoriesPage = () => {
     const [directories, setDirectories] = useState<IDirectoryItem[]>([]);
     const setHeaderVersion = useHeaderStore(store => store.setHeaderVersion)
+    const setRequestUrl = useHeaderStore((store) => store.setRequestUrl);
+    const response = useHeaderStore(store => store.response);
     useEffect(() => {
         setHeaderVersion('normal')
         const fetchDirectories = async () => {
@@ -22,7 +24,12 @@ const DirectoriesPage = () => {
         };
 
         fetchDirectories();
+        setRequestUrl("/directory/search-directories?directoryName=")
     }, []);
+
+    useEffect(() => {
+        setDirectories(response);
+    }, [response])
 
     return (
         <div className={`${styles.directories} container`}>

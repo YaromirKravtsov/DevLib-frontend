@@ -8,7 +8,7 @@ const TagManager = () => {
   const setHeaderVersion = useHeaderStore(store=> store.setHeaderVersion)
 
   useEffect(()=>{
-    setHeaderVersion('small')
+    setHeaderVersion('minimized')
   },[])
   return (
 
