@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { IPostItem } from '../models/IPostItem';
 import { ICommentItem } from '../../../app/models/ICommentItem';
-import { IReplyItem } from '../../../app/models/IReplyItem';
 import $api from '../../../app/api/http';
 
 export default class PostPageService {

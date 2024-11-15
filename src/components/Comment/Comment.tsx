@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './Comment.module.css';
 import commentIcon from '../../assets/images/icons/comment.png';
 import { ICommentItem } from '../../app/models/ICommentItem';
-import { IReplyItem } from '../../app/models/IReplyItem';
-import Reply from '../Reply/Reply';
 
 interface ICommentProps {
   comment?: ICommentItem;
@@ -92,15 +90,6 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
             </div>
           )}
         </div>
-
-        {(comment as ICommentItem).replies && (comment as ICommentItem).replies.length > 0 && isRepliesVisible && (
-          <div className={styles.repliesContainer}>
-            {(comment as ICommentItem).replies.map(reply => (
-              <Reply key={reply.commentId} reply={reply} onAddReply={handleAddReply} commentId={(comment as ICommentItem).commentId} />
-            ))}
-
-          </div>
-        )}
       </div>
     </div>
   );
