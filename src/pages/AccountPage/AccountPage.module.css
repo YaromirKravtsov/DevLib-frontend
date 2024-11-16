@@ -24,7 +24,7 @@
     height: 200px;
     border-radius: 50%;
     background-color: #dcdcdc;
-    cursor: pointer;
+
 }
 
 .avatar {
@@ -34,7 +34,7 @@
     object-fit: cover;
 }
 
-.photoOverlay {
+/*.photoOverlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -49,7 +49,7 @@
     border-radius: 50%;
     opacity: 0;
     transition: opacity 0.3s;
-}
+}*/
 
 .photoContainer:hover .photoOverlay {
     opacity: 1;
@@ -60,6 +60,7 @@
     align-items: center;
     margin-top: 20px;
     justify-content: center;
+    margin-bottom: -15px;
 }
 
 .username {
@@ -131,4 +132,27 @@
     height: 1px;
     background-color: #d3d3d3;
     margin: 8px 0;
+}
+
+.smallSeparator {
+    margin: 10px 0;
+    border: 0;
+    border-top: 1px solid #ccc;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.postsSection ul .postItem:not(:last-child),
+.commentsSection ul .commentItem:not(:last-child) {
+    border-bottom: 1px solid #d3d3d3; /* Роздільна риска */
+    padding-bottom: 10px; /* Відступ від риски до тексту */
+    margin-bottom: 10px; /* Відступ між елементами */
+}
+
+.commentItem small {
+    margin-left: 20px;
+    color: gray; /* Сірий колір для дати */
+    font-size: 12px;
+    text-align: right; /* Дата вирівнюється праворуч */
 }
