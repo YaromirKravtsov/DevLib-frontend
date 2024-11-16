@@ -25,7 +25,7 @@
     height: 200px;
     border-radius: 50%;
     background-color: #dcdcdc;
-    cursor: pointer;
+
 }
 
 .avatar {
@@ -35,7 +35,7 @@
     object-fit: cover;
 }
 
-.photoOverlay {
+/*.photoOverlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -50,7 +50,7 @@
     border-radius: 50%;
     opacity: 0;
     transition: opacity 0.3s;
-}
+}*/
 
 .photoContainer:hover .photoOverlay {
     opacity: 1;
@@ -63,6 +63,7 @@
     justify-content: center;
     margin-bottom: -15px;
     padding-bottom: 0px;
+
 }
 
 .username {
@@ -136,9 +137,32 @@
     margin: 8px 0;
 }
 
+.smallSeparator {
+    margin: 10px 0;
+    border: 0;
+    border-top: 1px solid #ccc;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.postsSection ul .postItem:not(:last-child),
+.commentsSection ul .commentItem:not(:last-child) {
+    border-bottom: 1px solid #d3d3d3; /* �������� ����� */
+    padding-bottom: 10px; /* ³����� �� ����� �� ������ */
+    margin-bottom: 10px; /* ³����� �� ���������� */
+}
+
+.commentItem small {
+    margin-left: 20px;
+    color: gray; /* ѳ��� ���� ��� ���� */
+    font-size: 12px;
+    text-align: right; /* ���� ����������� �������� */
+
+  
 /* Стилі форми редагування профілю */
 
-.form {
+/*.form {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -170,20 +194,19 @@
 .input:focus {
     border-color: #007bff;
     outline: none;
-}
+}*/
 
 /* Кнопки "Скасувати" та "Зберегти" */
 
-.buttonContainer {
+/*.buttonContainer {
     position: absolute; /* Размещает контейнер с кнопками снизу формы */
-    bottom: 10px; /* Отступ от низа формы */
-    right: 20px; /* Отступ от правого края формы */
-    display: flex;
-    gap: 10px; /* Отступ между кнопками */
-    
-}
+    /*bottom: 10px; /* Отступ от низа формы */
+    /*right: 20px; /* Отступ от правого края формы */
+    /*display: flex;
+    gap: 10px; /* Отступ между кнопками   
+}*/
 
-.cancelButton, .saveButton {
+/*.cancelButton, .saveButton {
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 9px;
@@ -214,7 +237,7 @@
 
 /* Заголовок сторінки */
 
-.title {
+/*.title {
     font-size: 24px;
     color: #555;
     text-align: center;
@@ -248,4 +271,4 @@
 
 .eyeIcon:hover {
     color: #007bff;
-}
+}*/
