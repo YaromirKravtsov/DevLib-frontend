@@ -1,8 +1,8 @@
 ﻿import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useHeaderStore } from "../../layouts/Header/store/header";
-import { useAuthStore } from "../../app/store/auth"; 
-import { getUserData } from "./api/AccountPageService"; 
+import { useAuthStore } from "../../app/store/auth";
+import { getUserData } from "./api/AccountPageService";
 import styles from "./AccountPage.module.css";
 
 interface Post {
@@ -35,22 +35,54 @@ const AccountPage: React.FC = () => {
     const setHeaderVersion = useHeaderStore((store) => store.setHeaderVersion);
     const navigate = useNavigate();
 
-    const loggedIn = useAuthStore((store) => store.loggedIn); // Стан авторизації
-    const userId = useAuthStore((store) => store.userId); // Беремо userId з zustand (перевірено, що він є)
+    const loggedIn = useAuthStore((store) => store.loggedIn);
+    const userId = useAuthStore((store) => store.userId);
+    const setUserId = useAuthStore.getState().setUserId; // Правильний доступ до функції setUserId
 
     useEffect(() => {
+        console.log("loggedIn:", loggedIn);
+        console.log("userId from store:", userId);
 
-        //console.log("userId:", userId);
+        const fetchUserId = () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                const decodedToken: any = JSON.parse(atob(token.split('.')[1]));
+                const userIdFromToken = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+                console.log("Decoded userId from token:", userIdFromToken);
+                if (userIdFromToken) {
+                    setUserId(userIdFromToken);
+                    localStorage.setItem('userId', userIdFromToken); // Зберігаємо в localStorage
+                } else {
+                    throw new Error("Не вдалося отримати ID користувача з токена.");
+                }
+            } else {
+                throw new Error("Токен не знайдено.");
+            }
+        };
+
+        if (!userId) {
+            fetchUserId();
+        }
+    }, [userId, setUserId]);
+
+    useEffect(() => {
         if (!loggedIn) {
-            navigate("/login"); // Перенаправляємо на сторінку входу, якщо користувач не авторизований
+            navigate("/login");
             return;
         }
 
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const data = await getUserData(userId); // Використовуємо userId
-                setUserData(data);
+                const finalUserId = userId || localStorage.getItem('userId');
+                if (finalUserId) {
+                    console.log("Fetching data for userId:", finalUserId);
+                    const data = await getUserData(finalUserId);
+                    setUserData(data);
+                } else {
+                    console.log("UserId is missing.");
+                    throw new Error("Не вдалося отримати ID користувача.");
+                }
             } catch (err: any) {
                 setError(err.message || "Помилка завантаження даних.");
             } finally {
@@ -58,15 +90,14 @@ const AccountPage: React.FC = () => {
             }
         };
 
-        if (userId) {
-            fetchData();
-        } else {
-            setError("Не вдалося отримати ID користувача.");
-            setLoading(false);
-        }
+        fetchData();
 
         setHeaderVersion("minimized");
-        return () => setHeaderVersion("normal");
+        return () => {
+            setHeaderVersion("normal");
+            setUserData(null); // Очищення стану профілю
+            localStorage.removeItem('userId'); // Очищення userId з localStorage
+        };
     }, [loggedIn, userId, setHeaderVersion, navigate]);
 
     if (loading) {
@@ -81,15 +112,13 @@ const AccountPage: React.FC = () => {
         return <div>Користувач не знайдений.</div>;
     }
 
-    //const handlePhotoChange = () => alert("Змінити фото");
     const handleEditProfile = () => navigate('/edit-profile');
 
     return (
         <div className={styles.profilePage}>
             <div className={styles.sidebar}>
-                <div className={styles.photoContainer} /*onClick={handlePhotoChange}*/>
+                <div className={styles.photoContainer}>
                     <img src={userData.photo} alt="" className={styles.avatar} />
-                    {/*<div className={styles.photoOverlay}>+</div>*/}
                 </div>
                 <div className={styles.usernameSection}>
                     <h2 className={styles.username}>{userData.username}</h2>
@@ -119,7 +148,7 @@ const AccountPage: React.FC = () => {
                         <ul>
                             {userData.comments.map((comment) => (
                                 <li className={styles.commentItem} key={comment.commentId}>{comment.content}
-                                    <small>{new Date(comment.dateTime).toLocaleString()}</small> {/* Виводимо дату і час */}
+                                    <small>{new Date(comment.dateTime).toLocaleString()}</small>
                                 </li>
                             ))}
                         </ul>
