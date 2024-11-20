@@ -4,7 +4,7 @@ import LoginPage from '../../pages/LoginPage/LoginPage';
 import MainPage from '../../pages/MainPage/MainPage';
 import BookMarksPage from '../../pages/BookMarksPage/BookMarksPage';
 import AddRecord from '../../pages/AddBook/AddBook';
-import Forum from '../../pages/Forum/Forum';
+import Forum from '../../pages/ForumPage/ForumPage';
 import UsersAdmin from '../../pages/UsersAdmin/UsersAdmin';
 import BooksPage from '../../pages/BooksPage/BooksPage';
 import DirectoriesPage from '../../pages/DirectoriesPage/DirectoriesPage';
@@ -20,8 +20,12 @@ import EditBook from '../../pages/EditBook/EditBook';
 import EditDerectory from '../../pages/EditDerectory/EditDerectory';
 import AddArticle from '../../pages/AddArticle/AddArticle';
 import EditArticle from '../../pages/EditArticle/EditArticle';
+import PasswordForgetReset from '../../pages/PasswordForgetReset/PasswordForgetReset';
 /* import LoginPage from '../../pages/LoginPage/LoginPage';
 import SeatchRealEstate from '../../pages/SeatchRealEstate/SeatchRealEstate'; */
+import EditProfilePage from '../../pages/EditProfilePage/EditProfilePage';
+import TagManager from '../../pages/TagManager/TagManager';
+import PostPage from '../../pages/PostPage/PostPage';
 
 
 
@@ -51,7 +55,11 @@ export enum RouteNames {
   ADD_ARTICLE ="/add-article/:articleId",
   EDIT_ARTICLE= "edit-article/:articleId",
   EDIT_DIRECTORY ="/edit-directory/:directoryId",
-  EDIT_BOOK ="/edit-book/:bookId"
+  PASSWORDFORGETRESET = "/reset-user-password",
+  EDIT_BOOK ="/edit-book/:bookId",
+  EDIT_PROFILE = "/edit-profile",
+  TAG_MANAGER ="/tag-manager",
+  POST = "/post/:postId"
 }
 
 
@@ -62,17 +70,21 @@ export const adminRoutes: IRoute[] = [
   { path: RouteNames.ADD_DIRECTORY, element: AddDirectory },
   { path: RouteNames.ADD_ARTICLE, element: AddArticle },
   { path: RouteNames.EDIT_ARTICLE, element: EditArticle },
-
   { path: RouteNames.EDIT_DIRECTORY, element: EditDerectory },
   { path: RouteNames.EDIT_BOOK, element: EditBook },
+  { path: RouteNames.TAG_MANAGER, element: TagManager },
+
+  
   
 
 ]
 
 // маршруты только для пользователя 
 export const userRoutes: IRoute[] = [
-  { path: RouteNames.BOOK_MARKS, element: BookMarksPage },
+  { path: RouteNames.LOGIN, element: LoginPage },
   { path: RouteNames.ACCOUNT, element: AccountPage },
+  { path: RouteNames.BOOK_MARKS, element: BookMarksPage },
+  { path: RouteNames.EDIT_PROFILE, element: EditProfilePage },
 
 ]
 
@@ -87,5 +99,6 @@ export const publicRoutes: IRoute[] = [
   { path: RouteNames.REFERENCE, element: ReferencePage },
   { path: RouteNames.BOOK_DETAILS, element: BookDetailsPage },
   { path: RouteNames.READING, element: ReadingPage },
-  { path: RouteNames.ARTICLE, element: ArticlePage },
+  { path: RouteNames.POST, element: PostPage },
+  { path: RouteNames.PASSWORDFORGETRESET, element: PasswordForgetReset },
 ]

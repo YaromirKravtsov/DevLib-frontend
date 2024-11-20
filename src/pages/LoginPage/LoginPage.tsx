@@ -10,6 +10,7 @@ import MyInput from '../../UI/MyInput/MyInput';
 import LoginService from './api/LoginService';
 import { validateStringFields } from '../../helpers/checkStringFields';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import PasswordResetPopup from './PasswordResetPopup';
 
 
 const CLIENT_ID_GUTHUB = 'Ov23liVP1fdpjqeZ6yPh'
@@ -21,7 +22,8 @@ const LoginPage = () => {
       password: ''
     }); */
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [isResetPopupOpen, setIsResetPopupOpen] = useState<boolean>(false);
 
   const login = useAuthStore(store => store.login)
   const loginWithGoogle = useAuthStore(store => store.loginWithGoogle)
@@ -55,8 +57,10 @@ const LoginPage = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const codeParam = urlParams.get("code");
+    if(!codeParam) return;
     try {
        await loginWithGithub(codeParam as string) // Господи, помоги!
+       await   navigate('/')
     } catch (error) {
       console.error("Error fetching access token:", error);
     }
@@ -67,7 +71,7 @@ const LoginPage = () => {
     if (loggedIn) {
       navigate('/')
     }
-  }, [loggedIn])
+  }, [])
   return (
     <div className={styles.main}>
       <div className={styles.title}>Вхід до акаунту</div>
@@ -87,7 +91,7 @@ const LoginPage = () => {
       </div>
 
       <div className={styles.textRow}>
-        <div className={styles.text}>забули пароль ?</div>
+        <div className={styles.text} onClick={() => setIsResetPopupOpen(true)}>забули пароль ?</div>
         <Link to={RouteNames.REGISTER} className={styles.text}>Зарееструватися</Link>
       </div>
 
@@ -111,7 +115,13 @@ const LoginPage = () => {
       </button>
       <button className={styles.logiButton} onClick={handelLogin}>
         Увійти
-      </button>
+          </button>
+
+
+          {/* Відображення попапу для скидання паролю */}
+          {isResetPopupOpen && (
+              <PasswordResetPopup onClose={() => setIsResetPopupOpen(false)} />
+          )}
     </div>
   )
 }

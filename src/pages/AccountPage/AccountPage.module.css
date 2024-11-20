@@ -3,6 +3,7 @@
     padding-left: 30px;
     padding-right: 30px;
     height: 100vh;
+    font-family: 'Hahmlet', sans-serif;
 }
 
 .sidebar {
@@ -61,6 +62,8 @@
     margin-top: 20px;
     justify-content: center;
     margin-bottom: -15px;
+    padding-bottom: 0px;
+
 }
 
 .username {
@@ -71,7 +74,7 @@
 }
 
 .editButton {
-    margin-top: 5px;
+    margin-top: 13px;
     padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
@@ -129,7 +132,7 @@
 
 .separator {
     border: none;
-    height: 1px;
+    height: 2px;
     background-color: #d3d3d3;
     margin: 8px 0;
 }
@@ -145,14 +148,127 @@
 
 .postsSection ul .postItem:not(:last-child),
 .commentsSection ul .commentItem:not(:last-child) {
-    border-bottom: 1px solid #d3d3d3; /* Роздільна риска */
-    padding-bottom: 10px; /* Відступ від риски до тексту */
-    margin-bottom: 10px; /* Відступ між елементами */
+    border-bottom: 1px solid #d3d3d3; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ */
+    padding-bottom: 10px; /* ВіпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ */
+    margin-bottom: 10px; /* ВіпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 }
 
 .commentItem small {
     margin-left: 20px;
-    color: gray; /* Сірий колір для дати */
+    color: gray; /* СіпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
     font-size: 12px;
-    text-align: right; /* Дата вирівнюється праворуч */
+    text-align: right; /* пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
+
+  
+/* РЎС‚РёР»С– С„РѕСЂРјРё СЂРµРґР°РіСѓРІР°РЅРЅСЏ РїСЂРѕС„С–Р»СЋ */
+
+/*.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 60px;
 }
+
+.label {
+    font-size: 18px;
+    color: black;
+    font-weight:600;
+    margin-bottom: 10px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 2px solid #d3d3d3;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #f7f7f7;
+    transition: border-color 0.3s;
+}
+
+.input:focus {
+    border-color: #007bff;
+    outline: none;
+}*/
+
+/* РљРЅРѕРїРєРё "РЎРєР°СЃСѓРІР°С‚Рё" С‚Р° "Р—Р±РµСЂРµРіС‚Рё" */
+
+/*.buttonContainer {
+    position: absolute; /* Р Р°Р·РјРµС‰Р°РµС‚ РєРѕРЅС‚РµР№РЅРµСЂ СЃ РєРЅРѕРїРєР°РјРё СЃРЅРёР·Сѓ С„РѕСЂРјС‹ */
+    /*bottom: 10px; /* РћС‚СЃС‚СѓРї РѕС‚ РЅРёР·Р° С„РѕСЂРјС‹ */
+    /*right: 20px; /* РћС‚СЃС‚СѓРї РѕС‚ РїСЂР°РІРѕРіРѕ РєСЂР°СЏ С„РѕСЂРјС‹ */
+    /*display: flex;
+    gap: 10px; /* РћС‚СЃС‚СѓРї РјРµР¶РґСѓ РєРЅРѕРїРєР°РјРё   
+}*/
+
+/*.cancelButton, .saveButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 3px solid #0B7DCF;
+    transition: background-color 0.3s;
+    width: 150px;
+}
+
+.cancelButton {
+    color: #0B7DCF;
+}
+
+.cancelButton:hover {
+    background-color: #f0f0f0;
+}
+
+.saveButton {
+    background-color: #0B7DCF;
+    color: white;
+    border: none;
+}
+
+.saveButton:hover {
+    background-color: #0056b3;
+}
+
+/* Р—Р°РіРѕР»РѕРІРѕРє СЃС‚РѕСЂС–РЅРєРё */
+
+/*.title {
+    font-size: 24px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 30px;
+    background-color: #e3f2fd;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.smallSeparator{
+    border: none;
+    height: 2px;
+    width: 300px;
+    background-color: #d3d3d3;
+}
+.passwordContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #3a3a3a;
+    transition: color 0.3s;
+}
+
+.eyeIcon:hover {
+    color: #007bff;
+}*/

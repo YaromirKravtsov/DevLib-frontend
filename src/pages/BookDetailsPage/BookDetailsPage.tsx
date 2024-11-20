@@ -109,9 +109,26 @@ const BookDetailsPage = () => {
         navigate(`/reading/${bookId}`);
     };
 
-    const toggleBookmark = () => {
+    const toggleBookmark = async () => {
         setIsBookmarked((prevIsBookmarked) => !prevIsBookmarked);
+
+        if (!isBookmarked && bookDetails) {
+            try {
+                await BookService.addBookmark({
+                    userId: String(userId), 
+                    bookId: String(bookId),
+                });
+                console.log("Книга додана до закладок.");
+
+                // Перенаправляємо на сторінку закладок після успішного додавання
+                navigate('/book-marks');
+            } catch (error) {
+                console.error("Не вдалося додати книгу в закладки:", error);
+            }
+        }
     };
+
+    
 
 
     if (error) {

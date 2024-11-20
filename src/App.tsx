@@ -2,13 +2,17 @@
 import AppLayout from './layouts/AppLayout/AppLayout';
 import AppRouter from './app/router/AppRouter';
 import './App.css';
+import AuthGuard from './app/AuthGuard/AuthGuard';
 
 function App() {
   return (
 
     <AppLayout>
-      <AppRouter />
+      <AuthGuard>
+        <AppRouter />
+      </AuthGuard>
     </AppLayout>
+
   );
 }
 
