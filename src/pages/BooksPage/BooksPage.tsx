@@ -42,7 +42,7 @@ const BooksPage: React.FC = () => {
     useEffect(() => {
         fetchBooks();
         fetchTags()
-        //setRequestUrl("/book/search-books?bookName=")
+        setRequestUrl("/book/search-books?bookName=")
         setHeaderVersion('normal');
     }, []);
 

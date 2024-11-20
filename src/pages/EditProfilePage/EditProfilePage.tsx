@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useHeaderStore } from '../../layouts/Header/store/header';
-import styles from '../AccountPage/AccountPage.module.css';
+import styles from './EditProfilePage.module.css';
 
 const EditProfilePage: React.FC = () => {
     const [username, setUsername] = useState("Kei_rin0");

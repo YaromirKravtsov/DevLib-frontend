@@ -5,10 +5,14 @@ import ForumPageService from './api/ForumPageService';
 import { IForumPost } from '../../app/models/IForumPage';
 import Post from './components/Post';
 import Dropdown from './components/Dropdown';
+import { useHeaderStore } from '../../layouts/Header/store/header';
+
 
 const Forum: React.FC = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [posts, setPosts] = useState<IForumPost[]>([]); // Стан для постів
+  const setRequestUrl = useHeaderStore((store) => store.setRequestUrl);
+  const response = useHeaderStore(store => store.response);
 
   // Отримання постів з API
   useEffect(() => {
@@ -22,7 +26,12 @@ const Forum: React.FC = () => {
     };
 
     fetchPosts(); // Завантаження постів при першому рендері
+    setRequestUrl("/post/search/")
   }, []); 
+
+    useEffect(() => {
+      setPosts(response);
+  }, [response])
 
   // Тогл для фільтра
   const toggleDropdown = () => {
