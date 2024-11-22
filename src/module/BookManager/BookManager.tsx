@@ -9,6 +9,8 @@ import { AddBookReq } from './api/req';
 import BookManagerService from './api/BookManagerService';
 import { urlToFile } from '../../helpers/urlToFile';
 import { useNavigate } from 'react-router-dom';
+import MySelect, { SelectOption } from '../../UI/MySelect/MySelect';
+import TagsService from '../../api/tags/TagsService';
 
 interface BookManagerProps {
   action: 'create' | 'edit';
@@ -22,9 +24,12 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
   const [initialMaterial, setInitialMaterial] = useState<File | null>(null); // начальное значение для материала
   const [photo, setPhoto] = useState<File | null>(null);
   const [initialPhoto, setInitialPhoto] = useState<File | null>(null); // начальное значение для фото
-  const [tags, setTags] = useState<IListItem[]>([]);
-  const [firstTags, setFirstTags] = useState<IListItem[]>([]);
+  const [tags, setTags] = useState<SelectOption[]>([]);
+  const [firstTags, setFirstTags] = useState<SelectOption[]>([]);
   const navigate = useNavigate()
+  const [selectedText,setSelectedText] = useState<string>('')
+
+
   const handleCreate = async () => {
     console.log('handleCreate')
     const reqData: AddBookReq = {
@@ -32,7 +37,7 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
       Author: bookAutor,
       BookPdf: material as File,
       BookImg: photo as File,
-      tags: tags.map(item => item.text),
+      tags: tags.map(item => item.value),
     };
     if (validateStringFields(reqData)) {
       try {
@@ -76,10 +81,10 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
       try {
         await BookManagerService.deleteTag({
           bookId: String(bookId),
-          tagId: tag.id
+          tagId: tag.value
         });
       } catch (deleteError) {
-        console.warn(`Failed to delete article with ID ${tag.id}:`, deleteError);
+        console.warn(`Failed to delete article with ID ${tag.value}:`, deleteError);
       }
     }
 
@@ -87,10 +92,10 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
       try {
         await BookManagerService.createTag({
           bookId: String(bookId),
-          tagText: tag.text
+          tagText: tag.label
         });
       } catch (deleteError) {
-        console.warn(`Failed to delete article with ID ${tag.id}:`, deleteError);
+        console.warn(`Failed to delete article with ID ${tag.value}:`, deleteError);
       }
     }
     navigate('/books/' + String(bookId))
@@ -104,40 +109,56 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
     }
   };
 
+ 
+  const fetchBook = async () => {
+    const { data } = await BookManagerService.getBook(String(bookId));
+    setBookName(data.bookName);
+    setBookAutor(data.author);
+    const url = 'http://localhost:3200';
+ /*    console.log('datadatadatadata')
+    console.log(data) */
+    urlToFile(url + data.pdf).then(file => {
+      if (file) {
+        setMaterial(file);
+        setInitialMaterial(file); // Устанавливаем начальное значение
+      } else {
+        console.log('Не удалось получить файл.');
+      }
+    });
+
+    urlToFile(data.bookImg).then(file => {
+      if (file) {
+        setPhoto(file);
+        setInitialPhoto(file); // Устанавливаем начальное значение
+      } else {
+        console.log('Не удалось получить файл.');
+      }
+    });
+
+    /* const { data: tagsData } = await BookManagerService.getTags(String(bookId));
+    const newTags = tagsData.map(tag => ({
+      text: tag.tagText,
+      id: tag.tagId,
+    }));
+    setFirstTags(newTags);
+    setTags(newTags); */
+
+
+  };
+
+  const fetchTags = async () =>{
+    const { data: tagsData }  = await TagsService.getAllTags();
+    console.log(tagsData)
+    setTags(tagsData.map(tag =>{
+      return {
+        value: tag.tagId,
+        label: tag.tagText
+      }
+    }))
+  }
+
   useEffect(() => {
-    const fetchBook = async () => {
-      const { data } = await BookManagerService.getBook(String(bookId));
-      setBookName(data.bookName);
-      setBookAutor(data.author);
-      const url = 'http://localhost:3200';
-
-      urlToFile(url + data.pdf).then(file => {
-        if (file) {
-          setMaterial(file);
-          setInitialMaterial(file); // Устанавливаем начальное значение
-        } else {
-          console.log('Не удалось получить файл.');
-        }
-      });
-
-      urlToFile(data.bookImg).then(file => {
-        if (file) {
-          setPhoto(file);
-          setInitialPhoto(file); // Устанавливаем начальное значение
-        } else {
-          console.log('Не удалось получить файл.');
-        }
-      });
-
-      const { data: tagsData } = await BookManagerService.getTags(String(bookId));
-      const newTags = tagsData.map(tag => ({
-        text: tag.tagText,
-        id: tag.tagId,
-      }));
-      setFirstTags(newTags);
-      setTags(newTags);
-    };
-
+    fetchTags()
     if (bookId && action === 'edit') fetchBook();
   }, [bookId]);
 
@@ -172,10 +193,10 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
         file={photo}
         type={'file'}
       />
-      <AddRecordInputRow title='Теги' type={'custom'}>
+      {/*     <AddRecordInputRow title='Теги' type={'custom'}>
         <ListEditor setList={setTags} list={tags} itemPlaceholder='Новий тег' />
-      </AddRecordInputRow>
-
+      </AddRecordInputRow> */}
+          <MySelect options={tags} onChange={setSelectedText} placeholder='Оберіть тег'/>
       <BlueButton onClick={handleAction}>{action === 'create' ? 'Опублікувати' : 'Зберігти'}</BlueButton>
     </div>
   );
