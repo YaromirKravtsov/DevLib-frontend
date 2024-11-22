@@ -5,6 +5,7 @@ export interface createNoteDto{
     userId: string;
     bookId: string;
     text: string;
+    type: string;
 }
 export default class ReadingPageServce {
     static async getNotes(bookId: string, userId:string):Promise<AxiosResponse<Note[]>>{
