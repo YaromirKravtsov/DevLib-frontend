@@ -101,4 +101,6 @@ export const publicRoutes: IRoute[] = [
   { path: RouteNames.READING, element: ReadingPage },
   { path: RouteNames.POST, element: PostPage },
   { path: RouteNames.PASSWORDFORGETRESET, element: PasswordForgetReset },
+  { path: RouteNames.ARTICLE, element: ArticlePage },
+
 ]
