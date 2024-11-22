@@ -227,9 +227,8 @@
     width: 100%;
     max-width: 600px;
     text-align: left;
+    row-gap: 20px;
 }
-
-
 
 .submitReviewButton {
     background-color: #E0E0E0;
@@ -250,4 +249,15 @@
     background-color: #f1f1f1;
     border-radius: 8px;
     margin-bottom: 10px;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+.userPhoto{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
 }

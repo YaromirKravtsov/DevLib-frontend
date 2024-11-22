@@ -1,8 +1,16 @@
+export interface IRewiew {
+    userImg: string,
+    /*     rate: , */
+    userName: string
+    creationDate: string,
+    text: string
+}
+
 export interface IBookDetails {
     bookName: string;
     bookId: string;
     author: string;
-    // reviews: [];
+    reviews: IRewiew[];
     pdf: string;
     bookImg?: string; 
     photoBook: string;

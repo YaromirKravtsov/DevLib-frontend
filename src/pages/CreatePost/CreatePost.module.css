@@ -1,0 +1,42 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 200px;
+    row-gap: 30px;
+}
+
+.title {
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 45px;
+    color: #000000;
+}
+
+.text {
+    min-height: 300px;
+    height: 300px;
+}
+
+.publish {
+    width: 240px;
+    height: 40px;
+    background: #0b7dcf;
+    margin-top: 30px;
+    border-radius: 100px;
+
+
+    font-family: 'Roboto';
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+
+
+
+    color: #FFFFFF;
+
+
+}

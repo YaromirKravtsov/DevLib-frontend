@@ -14,6 +14,11 @@ export interface AddBookmarkDto {
     bookId: string;
 }
 
+export interface AddReviewDto{
+    userId: string;
+    bookId: string;
+    content: string
+}
 export default class BookService {
     // Отримуємо деталі книги
     static async getBookDetails(bookId: string): Promise<IBookDetails> {
@@ -36,4 +41,9 @@ export default class BookService {
     static async addBookmark(dto: AddBookmarkDto): Promise<void> {
         return await $api.post(`/bookmark/add-bookmark`, dto);
     }
+
+    static async addReview(dto:AddReviewDto): Promise<void> {
+        return await $api.post(`/comment/add-review`, dto);
+    }
+
 }

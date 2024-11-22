@@ -26,6 +26,7 @@ import SeatchRealEstate from '../../pages/SeatchRealEstate/SeatchRealEstate'; */
 import EditProfilePage from '../../pages/EditProfilePage/EditProfilePage';
 import TagManager from '../../pages/TagManager/TagManager';
 import PostPage from '../../pages/PostPage/PostPage';
+import CreatePost from '../../pages/CreatePost/CreatePost';
 
 
 
@@ -59,7 +60,9 @@ export enum RouteNames {
   EDIT_BOOK ="/edit-book/:bookId",
   EDIT_PROFILE = "/edit-profile",
   TAG_MANAGER ="/tag-manager",
-  POST = "/post/:postId"
+  POST = "/post/:postId",
+  CREATE_POST = "/create-post"
+
 }
 
 
@@ -73,9 +76,9 @@ export const adminRoutes: IRoute[] = [
   { path: RouteNames.EDIT_DIRECTORY, element: EditDerectory },
   { path: RouteNames.EDIT_BOOK, element: EditBook },
   { path: RouteNames.TAG_MANAGER, element: TagManager },
+  { path: RouteNames.CREATE_POST, element: CreatePost },
+  
 
-  
-  
 
 ]
 
@@ -85,6 +88,9 @@ export const userRoutes: IRoute[] = [
   { path: RouteNames.ACCOUNT, element: AccountPage },
   { path: RouteNames.BOOK_MARKS, element: BookMarksPage },
   { path: RouteNames.EDIT_PROFILE, element: EditProfilePage },
+  { path: RouteNames.CREATE_POST, element: CreatePost },
+
+  
 
 ]
 
