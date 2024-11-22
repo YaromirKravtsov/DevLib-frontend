@@ -13,6 +13,7 @@ import PdfViewer from '../../components/PdfViewer/PdfViewer';
 export interface Note {
     noteId: string;
     note: string;
+    type: string
 }
 
 const ReadingPage = () => {
@@ -21,7 +22,8 @@ const ReadingPage = () => {
     const [notes, setNotes] = useState<Note[]>([]);
     const [newNote, setNewNote] = useState('');
     const [pdfUrl, setPdfUrl] = useState<string>('');
-    const userId = useAuthStore(store => store.userId)
+    const userId = useAuthStore(store => store.userId);
+    const [underlining, setUnderlining] = useState<Note[]>([]);
     const fetchBookDetails = async () => {
         if (!bookId) {
             console.error('No book ID provided');
@@ -42,13 +44,16 @@ const ReadingPage = () => {
     const fetchNotes = async () => {
         const { data } = await ReadingPageServce.getNotes(String(bookId), userId)
         console.log(data)
-        setNotes(data)
+        setNotes(data.filter(note => note.type == '1'))
+        setUnderlining(data.filter(note => note.type !== '1'))
+
     }
-    const createNote = async () => {
+    const createNote = async (type: string, note: string) => {
         await ReadingPageServce.createNote({
             bookId: String(bookId),
             userId: userId,
-            text: newNote
+            text: note,
+            type: type
         });
     }
 
@@ -67,11 +72,12 @@ const ReadingPage = () => {
 
     const handleAddNote = async () => {
         if (newNote.trim()) {
-            await createNote()
+            await createNote('1', newNote)
             await fetchNotes()
             setNewNote('');
         }
     };
+
 
     const delteNote = async (id: string) => {
         await ReadingPageServce.deleteNote(id)
@@ -82,6 +88,13 @@ const ReadingPage = () => {
         delteNote(id)
         setNotes(notes.filter((note) => note.noteId !== id));
     };
+    const handleAddNewHighlight = async (text: string) => {
+        console.log(text)
+        await createNote('2', text)
+        await fetchNotes()
+        setNewNote('');
+
+    }
 
     return (
         <div className={styles.container}>
@@ -110,7 +123,7 @@ const ReadingPage = () => {
 
 
 
-            <PdfViewer file={pdfUrl} />
+            <PdfViewer file={pdfUrl} /* addNewHighlight={handleAddNewHighlight} highlightedTexts={underlining} */ />
 
 
             <div className={styles.notesList}>
