@@ -45,7 +45,7 @@ export const useAuthStore = create<BearState>()(
           loggedIn: true,
           role: (decodedToken.role == 'Client') ? 'user' : (decodedToken.role == 'Admin') ? 'admin' : '',
           isLoading: false,
-          setUserId: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+          userId: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
         });
 
         localStorage.setItem('token', data.token);
@@ -97,7 +97,8 @@ export const useAuthStore = create<BearState>()(
         set({
           loggedIn: true,
           role: (decodedToken.role == 'Client') ? 'user' : (decodedToken.role == 'Admin') ? 'admin' : '',
-          isLoading: false
+          isLoading: false,
+          userId: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
         });
       } catch (error: any) {
         console.error(error.response?.data?.message);
