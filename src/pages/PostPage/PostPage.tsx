@@ -29,7 +29,7 @@ const PostPage: React.FC = () => {
   const userId = useUserId();
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const navigate = useNavigate();
-
+  const role = useAuthStore(store => store.role)
   const fetchPost = async () => {
     try {
       setLoading(true);
@@ -69,10 +69,15 @@ const PostPage: React.FC = () => {
     console.log({
       userId, text: newCommentText, postId: String(postId)
     })
-    await PostPageService.createComment({
-      userId, text: newCommentText, postId: String(postId)
-    })
-    await fetchPost();
+    try {
+      await PostPageService.createComment({
+        userId, text: newCommentText, postId: String(postId)
+      })
+      await fetchPost();
+    } catch (error) {
+      console.log(error)
+    }
+
     setNewCommentText('');
   };
 
@@ -113,29 +118,31 @@ const PostPage: React.FC = () => {
         className={`${styles.articleText} custom-text`}
         dangerouslySetInnerHTML={{ __html: post.text ? post.text : 'Тут буде контент статті' }}
       />
-
       <div className={styles.postFooter}>
         <button className={styles.iconButton} onClick={() => { }}>
           <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {countAllCommentsInList(comments)}
         </button>
       </div>
+      {role !== '' &&
+        <div className={styles.commentInputContainer}>
+          <textarea
+            ref={textAreaRef}
+            value={newCommentText}
+            onChange={handleInputChange}
+            onFocus={() => setIsInputFocused(true)}
+            placeholder="Напишите комментарий..."
+            className={styles.commentInput}
+          />
+          {isInputFocused && (
+            <div className={styles.commentActions}>
+              <button onClick={handleAddComment} className={styles.sendButton}>Отправить</button>
+              <button onClick={() => setIsInputFocused(false)} className={styles.cancelButton}>Отмена</button>
+            </div>
+          )}
+        </div>
 
-      <div className={styles.commentInputContainer}>
-        <textarea
-          ref={textAreaRef}
-          value={newCommentText}
-          onChange={handleInputChange}
-          onFocus={() => setIsInputFocused(true)}
-          placeholder="Напишите комментарий..."
-          className={styles.commentInput}
-        />
-        {isInputFocused && (
-          <div className={styles.commentActions}>
-            <button onClick={handleAddComment} className={styles.sendButton}>Отправить</button>
-            <button onClick={() => setIsInputFocused(false)} className={styles.cancelButton}>Отмена</button>
-          </div>
-        )}
-      </div>
+      }
+
       <CommentsList comments={comments} onAddReply={handleAddReply} />
     </div>
   );
