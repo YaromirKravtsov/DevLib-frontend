@@ -19,18 +19,16 @@ const BookMarksPage: React.FC = () => {
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                // Отримуємо список ID закладок
                 const fetchedBooksIds = await BookMarksPageService.getBooks(userId);
-                console.log(fetchedBooksIds);  // Перевірте отримані ID
+                console.log(fetchedBooksIds);
                 
-                // Для кожного ID отримуємо детальну інформацію про книгу
                 const fetchedBooks = await Promise.all(
                     fetchedBooksIds.map(async (bookId) => {
                         const bookDetails = await BookMarksPageService.getBookDetails(bookId);
                         return bookDetails;
                     })
                 );
-                setBooks(fetchedBooks); // Оновлюємо стан з детальними книгами
+                setBooks(fetchedBooks); 
             } catch (error) {
                 console.error('Помилка при завантаженні книг:', error);
             }
@@ -48,8 +46,7 @@ const BookMarksPage: React.FC = () => {
     // Функція для видалення книги
     const handleRemoveBook = async (bookmarkId: string) => {
         try {
-            await BookMarksPageService.removeBook(bookmarkId); // Викликаємо метод видалення
-            // Оновлюємо стан, щоб видалити книгу з UI
+            await BookMarksPageService.removeBook(bookmarkId);
             setBooks((prevBooks) => prevBooks.filter((book) => book.bookId !== bookmarkId));
         } catch (error) {
             console.error('Помилка при видаленні книги:', error);
@@ -58,31 +55,14 @@ const BookMarksPage: React.FC = () => {
 
     return (
         <div className={styles.bookmarksContainer}>
-            <h1 className={styles.title}>Вибране</h1>
-            <div className={styles.topButtons}>
-                <button
-                    className={`${styles.categoryButton} ${activeCategory === 'forum' ? styles.activeButton : ''}`}
-                    onClick={() => handleCategoryClick('forum')}
-                >
-                    Форум
-                </button>
-                <button
-                    className={`${styles.categoryButton} ${activeCategory === 'books' ? styles.activeButton : ''}`}
-                    onClick={() => handleCategoryClick('books')}
-                >
-                    Книги
-                </button>
-            </div>
-
-            {/* Використовуємо компонент AllBooksList для відображення списку закладок */}
+            <h1 className={styles.title}>Обрані книги</h1>
             <div className={styles.booksGrid}>
                 {books.map((book) => (
                     <div key={book.bookId} className={styles.bookItem}>
                         <AllBooksList books={[book]} />
-                        {/* Кнопка для видалення закладки */}
                         <button 
                             className={styles.removeButton} 
-                            onClick={() => handleRemoveBook(book.bookId)}  // Викликаємо видалення книги при натисканні
+                            onClick={() => handleRemoveBook(book.bookId)} 
                         >
                             ×
                         </button> 
