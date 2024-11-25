@@ -6,13 +6,14 @@ import DownloadModal from './components/DownloadModal/DownloadModal';
 import styles from './BookDetailsPage.module.css';
 import BookmarkIcon from './components/BookmarkIcon/BookmarkIcon';
 import BookService from './api/BookService';
-import { IBookDetails } from '../../models/IBookDetails';
+import { IBookDetails, IRewiew } from '../../models/IBookDetails';
 import axios from 'axios';
 import { ITag } from '../../models/ITag';
 import { useAuthStore } from '../../app/store/auth';
 import { downloadPDF } from './helpers/downloadPDF';
 import ReadingPageServce from '../ReadingPage/api/ReadingPage';
 import FileSaver from 'file-saver';
+
 const BookDetailsPage = () => {
     const { bookId } = useParams<{ bookId: string }>();
     const navigate = useNavigate();
@@ -21,13 +22,15 @@ const BookDetailsPage = () => {
     const [bookDetails, setBookDetails] = useState<IBookDetails | null>(null);
     const [rating, setRating] = useState<number>(0);
     const [reviewText, setReviewText] = useState('');
-    const [reviews, setReviews] = useState<{ text: string }[]>([]);
+    const [reviews, setReviews] = useState<IRewiew[]>([]);
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
     const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [tags, setTags] = useState<ITag[]>([]);
     const userId = useAuthStore(store => store.userId);
+    const role = useAuthStore(store => store.role);
+
 
     const fetchBookDetails = async () => {
         if (bookId) {
@@ -36,6 +39,17 @@ const BookDetailsPage = () => {
                 console.log('Fetched Book Details:', response);
                 setBookDetails(response);
 
+                setReviews(response.reviews.map(review => {
+                    const formattedDate = new Date(review.creationDate).toLocaleDateString("ru-RU", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric"
+                    });
+
+                    return {
+                        ...review, creationDate: formattedDate
+                    }
+                }))
             } catch (error) {
                 console.error('Error fetching book details:', error);
                 setError('Failed to fetch book details.');
@@ -69,10 +83,19 @@ const BookDetailsPage = () => {
 
 
 
-    const handleReviewSubmit = () => {
+    const handleReviewSubmit = async () => {
         if (reviewText) {
-            const newReview = { text: reviewText };
-            setReviews((prevReviews) => [...prevReviews, newReview]);
+            /*      const newReview = { text: reviewText }; */
+            /*   setReviews((prevReviews) => [...prevReviews, newReview]); */
+            try {
+                await BookService.addReview({
+                    userId, bookId: String(bookId), content: reviewText
+                })
+                await fetchBookDetails()
+            } catch (e) {
+                console.log(e)
+            }
+
             setReviewText('');
             closeReviewModal();
         }
@@ -115,7 +138,7 @@ const BookDetailsPage = () => {
         if (!isBookmarked && bookDetails) {
             try {
                 await BookService.addBookmark({
-                    userId: String(userId), 
+                    userId: String(userId),
                     bookId: String(bookId),
                 });
                 console.log("Книга додана до закладок.");
@@ -128,7 +151,7 @@ const BookDetailsPage = () => {
         }
     };
 
-    
+
 
 
     if (error) {
@@ -186,30 +209,37 @@ const BookDetailsPage = () => {
             </div>
 
             <div className={styles.lineSeparator}></div>
+            {role !== '' &&
+                <div className={styles.ratingSection}>
+                    <h2 className={styles.ratingTitle}>Оцініть цю книгу</h2>
+                    <p className={styles.ratingDescription}>
+                        Розповісте усім, що ви думаєте про цю книгу.
+                    </p>
+                    <div className={styles.starsContainer}>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <span
+                                key={star}
+                                onClick={() => setRating(star)}
+                                className={rating >= star ? styles.filledStar : styles.emptyStar}
+                            >
+                                ★
+                            </span>
+                        ))}
+                    </div>
 
-            <div className={styles.ratingSection}>
-                <h2 className={styles.ratingTitle}>Оцініть цю книгу</h2>
-                <p className={styles.ratingDescription}>
-                    Розповісте усім, що ви думаєте про цю книгу.
-                </p>
-                <div className={styles.starsContainer}>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                        <span
-                            key={star}
-                            onClick={() => setRating(star)}
-                            className={rating >= star ? styles.filledStar : styles.emptyStar}
-                        >
-                            ★
-                        </span>
-                    ))}
+
+
+                    <button className={styles.rateButton} onClick={handleRatingSubmit}>
+                        Ставити оцінку
+                    </button>
+                    <button className={styles.reviewButton} onClick={openReviewModal}>
+                        Написати відгук
+                    </button>
+
+
+
                 </div>
-                <button className={styles.rateButton} onClick={handleRatingSubmit}>
-                    Ставити оцінку
-                </button>
-                <button className={styles.reviewButton} onClick={openReviewModal}>
-                    Написати відгук
-                </button>
-            </div>
+            }
 
             <ReviewModal
                 isOpen={isReviewModalOpen}
@@ -230,7 +260,15 @@ const BookDetailsPage = () => {
                 {reviews.length > 0 ? (
                     reviews.map((review, index) => (
                         <div key={index} className={styles.review}>
+                            <div className={styles.row}>
+                                <img className={styles.userPhoto} src={review.userImg} alt="" />
+                                <p className={styles.reviewText}>{review.userName} Name</p>
+                                <p className={styles.reviewText}>{review.creationDate}</p>
+
+
+                            </div>
                             <p className={styles.reviewText}>{review.text}</p>
+
                         </div>
                     ))
                 ) : (

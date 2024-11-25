@@ -2,14 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './Comment.module.css';
 import commentIcon from '../../assets/images/icons/comment.png';
 import { ICommentItem } from '../../app/models/ICommentItem';
+import { formatDate } from '../../helpers/formatDate';
 
 interface ICommentProps {
-  comment?: ICommentItem;
+  comment: ICommentItem;
   onAddReply: (commentId: string, text: string) => void;
 }
 
 const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
-  const formattedDate = new Date((comment as ICommentItem).dateTime as string).toLocaleString();
+  const formattedDate = formatDate(comment.dateTime);
   const [newReply, setNewReply] = useState<string>('');
   const [isRepliesVisible, setIsRepliesVisible] = useState<boolean>(false);
   const [isReplyFieldVisible, setIsReplyFieldVisible] = useState<boolean>(false);
@@ -55,21 +56,26 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
     }
   };
 
+  const countAllComments = (comment: ICommentItem): number => {
+    // Считаем текущий комментарий (1) + вложенные комментарии
+    return 1 + (comment.comments?.reduce((total, nestedComment) => total + countAllComments(nestedComment), 0) || 0);
+  };
+  
   return (
     <div className={styles.commentContainer}>
       <div className={styles.userIcon}></div>
       <div className={styles.commentContent}>
         <div className={styles.commentHeader}>
-          <span className={styles.userName}><b>{(comment as ICommentItem).userId}</b></span> ・<span className={styles.commentDate}>{formattedDate}</span>
+          <span className={styles.userName}><b>{(comment as ICommentItem).authorName}</b></span> ・<span className={styles.commentDate}>{formattedDate}</span>
         </div>
         <div className={styles.commentTextContainer}>
           <div className={styles.verticalLine}></div>
           <div className={styles.commentText}>{(comment as ICommentItem).text}</div>
         </div>
-
+     
         <div className={styles.replyActions}>
           <button className={styles.iconButton} onClick={toggleRepliesVisibility}>
-            <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {(comment as ICommentItem).replies?.length || 0}
+            <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {countAllComments(comment) - 1}
           </button>
           {isReplyFieldVisible && (
             <div className={styles.commentInputContainer}>

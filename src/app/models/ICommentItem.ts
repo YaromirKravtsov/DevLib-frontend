@@ -3,6 +3,7 @@ export interface ICommentItem {
     userId: string;
     text: string;
     postId: string;
-    dateTime?: string;
-    replies: ICommentItem[];
+    dateTime: string;
+    comments: ICommentItem[];
+    authorName:string
 }
