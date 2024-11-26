@@ -3,6 +3,7 @@ import { AddBookReq } from "./req";
 import $api from "../../../app/api/http";
 import IBook from "../../../models/IBook";
 import { ITag } from "../../../models/ITag";
+import { IBookDetails } from "../../../models/IBookDetails";
 export interface deleteTagDto{
     bookId: string;
     tagId: string
@@ -19,12 +20,10 @@ export default class BookManagerService {
         formData.append('Author', dto.Author)
         formData.append('BookPdf', dto.BookPdf)
         formData.append('BookImg', dto.BookImg)
-        dto.tags.forEach((item) => {
-            formData.append('Tgas', item)
-        });
+        formData.append('Tag', dto.Tag)
         return $api.post('/book/add-book', formData);
     }
-    static async getBook(id: string): Promise<AxiosResponse<IBook>> {
+    static async getBook(id: string): Promise<AxiosResponse<IBookDetails>> {
         return $api.get('/book/get-book/' + id)
     }
     static async getTags(id: string): Promise<AxiosResponse<ITag[]>> {

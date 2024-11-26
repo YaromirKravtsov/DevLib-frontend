@@ -55,6 +55,7 @@ const Forum: React.FC = () => {
       <div className={styles.postsContainer}>
         {posts.length > 0 ? (
           posts.map((post) => (
+           
             <Post key={post.postId} {...post} />
           ))
         ) : (

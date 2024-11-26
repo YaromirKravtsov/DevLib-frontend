@@ -31,7 +31,7 @@ export default class BookService {
     static async getTags(bookId: string): Promise<AxiosResponse<ITag[]>> {
         return await $api.get(`tag/get-tags/${bookId}`);
     }
-
+    
     // Встановлюємо рейтинг книги
     static async setRating(dto: setRatingDto): Promise<AxiosResponse<ITag[]>> {
         return await $api.post(`/raiting/add-rating/`, dto);

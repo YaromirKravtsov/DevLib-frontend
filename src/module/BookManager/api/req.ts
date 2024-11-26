@@ -3,5 +3,5 @@ export interface AddBookReq{
     Author: string;
     BookImg: File;
     BookPdf: File;
-    tags: string[]
+    Tag: string
 }

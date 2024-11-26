@@ -35,9 +35,8 @@ export const useHeaderStore = create<HeaderState>()(
    getData: async () => {
     set({ requestIsLoading: true });
     try {
-      const { value, requestUrl } = get();
-      const searchUrl = `${requestUrl}${value || ''}`;
-      const { data } = await $api.get(searchUrl);
+      const {  requestUrl } = get();
+      const { data } = await $api.get(requestUrl);
       set({ response: data });
     } catch (e) {
       console.error(e);

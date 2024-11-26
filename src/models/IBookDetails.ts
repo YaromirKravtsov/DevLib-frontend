@@ -1,3 +1,5 @@
+import { ITag } from "./ITag";
+
 export interface IRewiew {
     userImg: string,
     /*     rate: , */
@@ -12,8 +14,9 @@ export interface IBookDetails {
     author: string;
     reviews: IRewiew[];
     pdf: string;
-    bookImg?: string; 
+    bookImg: string; 
     photoBook: string;
     averageRating: number; 
+    tags: ITag[]
     
 }

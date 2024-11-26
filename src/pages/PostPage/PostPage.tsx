@@ -140,9 +140,7 @@ const PostPage: React.FC = () => {
             </div>
           )}
         </div>
-
       }
-
       <CommentsList comments={comments} onAddReply={handleAddReply} />
     </div>
   );

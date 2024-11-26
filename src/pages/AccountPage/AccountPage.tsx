@@ -4,6 +4,7 @@ import { useHeaderStore } from "../../layouts/Header/store/header";
 import { useAuthStore } from "../../app/store/auth";
 import { getUserData } from "./api/AccountPageService";
 import styles from "./AccountPage.module.css";
+import { Link } from "react-router-dom";
 
 interface Post {
     postId: string;
@@ -116,6 +117,7 @@ const AccountPage: React.FC = () => {
 
     return (
         <div className={styles.profilePage}>
+            
             <div className={styles.sidebar}>
                 <div className={styles.photoContainer}>
                     <img src={userData.photo} alt="" className={styles.avatar} />
@@ -134,7 +136,13 @@ const AccountPage: React.FC = () => {
                     {userData.posts.length > 0 ? (
                         <ul>
                             {userData.posts.map((post) => (
-                                <li className={styles.postItem} key={post.postId}>{post.text}</li>
+                                <>
+                                    <Link to = {'/post/' + post.postId}
+                                        className={`${styles.postItem}`}
+                                        dangerouslySetInnerHTML={{ __html: post ? post.text : 'Тут буде контент статті' }}
+                                    />
+                                  {/*   <li className={styles.postItem} key={post.postId}>{post.text}</li> */}
+                                    </>
                             ))}
                         </ul>
                     ) : (
