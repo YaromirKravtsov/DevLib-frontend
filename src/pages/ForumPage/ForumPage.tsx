@@ -11,6 +11,7 @@ import { useAuthStore } from '../../app/store/auth';
 
 
 const Forum: React.FC = () => {
+  const setHeaderVersion = useHeaderStore(store => store.setHeaderVersion);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [posts, setPosts] = useState<IForumPost[]>([]); // Стан для постів
   const setRequestUrl = useHeaderStore((store) => store.setRequestUrl);
@@ -35,6 +36,10 @@ const Forum: React.FC = () => {
   useEffect(() => {
     setPosts(response);
   }, [response])
+
+  useEffect(() => {
+    setHeaderVersion('normal');
+  }, [setHeaderVersion]);
 
   // Тогл для фільтра
   const toggleDropdown = () => {

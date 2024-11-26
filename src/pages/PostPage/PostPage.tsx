@@ -19,6 +19,7 @@ const useUserId = () => {
 };
 
 const PostPage: React.FC = () => {
+  const authorImg = process.env.STATIC_URL || 'http://localhost:3200';
   const setHeaderVersion = useHeaderStore(store => store.setHeaderVersion);
   const [post, setPost] = useState<IPostItem | null>(null);
   const { postId } = useParams<{ postId: string }>();
@@ -108,7 +109,15 @@ const PostPage: React.FC = () => {
         <button onClick={handleBack} className={styles.backButton}>
           <FaArrowLeft />
         </button>
-        <div className={styles.userIcon}></div>
+        <div className={styles.userIcon}>
+          {post.authorImg ? (
+            <img
+              src={authorImg + post.authorImg}
+              alt={post.authorName}
+              className={styles.userImage}
+            />
+          ) : null}
+        </div>
         <div className={styles.userInfo}>
           <span><b>{post.authorName}</b> • {formatDate(post.dateTime)}</span>
         </div>
