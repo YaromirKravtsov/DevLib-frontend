@@ -13,14 +13,26 @@ import TagsService from '../../api/tags/TagsService';
 const BooksPage: React.FC = () => {
     const setHeaderVersion = useHeaderStore((store) => store.setHeaderVersion);
     const [books, setBooks] = useState<IBookItem[]>([]);
-    const setRequestUrl = useHeaderStore((store) => store.setRequestUrl);
+    const setRequestUrl = useHeaderStore((store) => store.setRequestUrl)
+    const requestUrl = useHeaderStore((store) => store.requestUrl);
+    const searchValue = useHeaderStore(store => store.value)
     const response = useHeaderStore(store => store.response);
     const [tags, setTags] = useState<ITag[]>([])
-
+    const [selectedTag, setSelectedTag] = useState<string>('')
     const selectTag = (value: string) => {
-        //TODO Фильтрация по id тега
-        alert(value)
+
+        setRequestUrl(`/book/search?bookName=${searchValue}&tag=${value}`)
+        setSelectedTag(value)
     }
+
+    useEffect(() => {
+        if (selectedTag.trim() !== '') {
+            localStorage.setItem('selectedBookTag', selectedTag)
+        }
+    }, [selectedTag])
+    useEffect(() => {
+        setRequestUrl(`/book/search?bookName=${searchValue}&tag=${selectedTag}`)
+    }, [searchValue])
     const fetchBooks = async () => {
         try {
             const { data } = await BooksPageService.getAllBooks();
@@ -42,8 +54,12 @@ const BooksPage: React.FC = () => {
     useEffect(() => {
         fetchBooks();
         fetchTags()
-        setRequestUrl("/book/search-books?bookName=")
+        setRequestUrl("/book/search?bookName=")
         setHeaderVersion('normal');
+        const selectedTagLocalStorege = localStorage.getItem('selectedBookTag')
+        if (selectedTagLocalStorege?.trim() !== '' && selectedTagLocalStorege) {
+            setSelectedTag(selectedTagLocalStorege)
+        }
     }, []);
 
     useEffect(() => {
@@ -58,6 +74,7 @@ const BooksPage: React.FC = () => {
                     onChange={selectTag}
                     options={tagsToSelectItems(tags)}
                     placeholder='Оберіть тег'
+                    value={selectedTag}
                 />
             </div>
             <AllBooksList books={books} />

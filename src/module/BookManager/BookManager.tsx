@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { act, FC, useEffect, useState } from 'react';
 import RecordType from '../../components/RecordType/RecordType';
 import styles from './BookManager.module.css';
 import AddRecordInputRow from '../../components/AddRecordInputRow/AddRecordInputRow';
@@ -8,7 +8,11 @@ import { validateStringFields } from '../../helpers/checkStringFields';
 import { AddBookReq } from './api/req';
 import BookManagerService from './api/BookManagerService';
 import { urlToFile } from '../../helpers/urlToFile';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import MySelect, { SelectOption } from '../../UI/MySelect/MySelect';
+import TagsService from '../../api/tags/TagsService';
+import { ITag } from '../../models/ITag';
+
 
 interface BookManagerProps {
   action: 'create' | 'edit';
@@ -22,39 +26,40 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
   const [initialMaterial, setInitialMaterial] = useState<File | null>(null); // начальное значение для материала
   const [photo, setPhoto] = useState<File | null>(null);
   const [initialPhoto, setInitialPhoto] = useState<File | null>(null); // начальное значение для фото
-  const [tags, setTags] = useState<IListItem[]>([]);
-  const [firstTags, setFirstTags] = useState<IListItem[]>([]);
+  const [tags, setTags] = useState<SelectOption[]>([]);
+
+  const [selectedTag, setSelectedTag] = useState<string>('')
+  const [redirectToHome, setRedirectToHome] = useState(false);
   const navigate = useNavigate()
   const handleCreate = async () => {
-    console.log('handleCreate')
     const reqData: AddBookReq = {
       BookName: bookName,
       Author: bookAutor,
       BookPdf: material as File,
       BookImg: photo as File,
-      tags: tags.map(item => item.text),
+      Tag: selectedTag,
     };
     if (validateStringFields(reqData)) {
       try {
         await BookManagerService.addBook(reqData);
+
+        setRedirectToHome(true)
       } catch (e) {
         console.log(e);
         alert('Виникла помилка');
       }
     }
-    navigate('')
+
   };
 
   const handleEdit = async () => {
-    console.log("editediteditedit");
-    console.log('firstTags:', firstTags);
-    console.log('bookName:', bookName);
-    console.log('material:', material);
-    console.log('photo:', photo);
     const formData = new FormData();
     formData.append('BookId', String(bookId))
     formData.append('Author', bookAutor)
     formData.append('BookName', bookName)
+    formData.append('BookName', bookName)
+    formData.append('TagId', selectedTag)
+
 
     const materialChanged = material && (!initialMaterial || material.name !== initialMaterial.name);
     const photoChanged = photo && (!initialPhoto || photo.name !== initialPhoto.name);
@@ -72,27 +77,9 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
       console.log(e)
     }
 
-    for (const tag of firstTags) {
-      try {
-        await BookManagerService.deleteTag({
-          bookId: String(bookId),
-          tagId: tag.id
-        });
-      } catch (deleteError) {
-        console.warn(`Failed to delete article with ID ${tag.id}:`, deleteError);
-      }
-    }
 
-    for (const tag of tags) {
-      try {
-        await BookManagerService.createTag({
-          bookId: String(bookId),
-          tagText: tag.text
-        });
-      } catch (deleteError) {
-        console.warn(`Failed to delete article with ID ${tag.id}:`, deleteError);
-      }
-    }
+
+
     navigate('/books/' + String(bookId))
   };
 
@@ -104,43 +91,65 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
     }
   };
 
+
+  const fetchBook = async () => {
+    const { data } = await BookManagerService.getBook(String(bookId));
+    setBookName(data.bookName);
+    setBookAutor(data.author);
+    if(action == 'create') {
+      setSelectedTag(data.tags[0].tagText as string)
+
+    }else{
+      setSelectedTag(data.tags[0].tagId as string)
+    }
+    const url = 'http://localhost:3200';
+    urlToFile(url + data.pdf).then(file => {
+      if (file) {
+        setMaterial(file);
+        setInitialMaterial(file); // Устанавливаем начальное значение
+      } else {
+        console.log('Не удалось получить файл.');
+      }
+    });
+
+    urlToFile(data.bookImg).then(file => {
+      if (file) {
+        setPhoto(file);
+        setInitialPhoto(file); // Устанавливаем начальное значение
+      } else {
+        console.log('Не удалось получить файл.');
+      }
+    });
+  };
+
+  const fetchTags = async () => {
+    const { data: tagsData } = await TagsService.getAllTags();
+    console.log(tagsData)
+    if (action === 'edit') {
+      setTags(tagsData.map(tag => {
+        return {
+          value: tag.tagId,
+          label: tag.tagText
+        }
+      }))
+    } else {
+      setTags(tagsData.map(tag => {
+        return {
+          value: tag.tagText,
+          label: tag.tagText
+        }
+      }))
+    }
+
+  }
+
   useEffect(() => {
-    const fetchBook = async () => {
-      const { data } = await BookManagerService.getBook(String(bookId));
-      setBookName(data.bookName);
-      setBookAutor(data.author);
-      const url = 'http://localhost:3200';
-
-      urlToFile(url + data.pdf).then(file => {
-        if (file) {
-          setMaterial(file);
-          setInitialMaterial(file); // Устанавливаем начальное значение
-        } else {
-          console.log('Не удалось получить файл.');
-        }
-      });
-
-      urlToFile(data.bookImg).then(file => {
-        if (file) {
-          setPhoto(file);
-          setInitialPhoto(file); // Устанавливаем начальное значение
-        } else {
-          console.log('Не удалось получить файл.');
-        }
-      });
-
-      const { data: tagsData } = await BookManagerService.getTags(String(bookId));
-      const newTags = tagsData.map(tag => ({
-        text: tag.tagText,
-        id: tag.tagId,
-      }));
-      setFirstTags(newTags);
-      setTags(newTags);
-    };
-
+    fetchTags()
     if (bookId && action === 'edit') fetchBook();
   }, [bookId]);
-
+  if (redirectToHome) {
+    return <Navigate to="/" />; // react-router-dom v6
+  }
   return (
     <div className={styles.main}>
       {action === 'create' && <RecordType recordType={'book'} />}
@@ -172,10 +181,8 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
         file={photo}
         type={'file'}
       />
-      <AddRecordInputRow title='Теги' type={'custom'}>
-        <ListEditor setList={setTags} list={tags} itemPlaceholder='Новий тег' />
-      </AddRecordInputRow>
 
+      <MySelect options={tags} value={selectedTag} onChange={setSelectedTag} placeholder='Оберіть тег' />
       <BlueButton onClick={handleAction}>{action === 'create' ? 'Опублікувати' : 'Зберігти'}</BlueButton>
     </div>
   );

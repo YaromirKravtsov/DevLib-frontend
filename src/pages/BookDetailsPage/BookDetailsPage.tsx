@@ -31,14 +31,14 @@ const BookDetailsPage = () => {
     const userId = useAuthStore(store => store.userId);
     const role = useAuthStore(store => store.role);
 
-
+    console.log(bookDetails)
     const fetchBookDetails = async () => {
         if (bookId) {
             try {
                 const response = await BookService.getBookDetails(bookId);
                 console.log('Fetched Book Details:', response);
                 setBookDetails(response);
-
+                setTags(response.tags)
                 setReviews(response.reviews.map(review => {
                     const formattedDate = new Date(review.creationDate).toLocaleDateString("ru-RU", {
                         day: "2-digit",
@@ -66,18 +66,11 @@ const BookDetailsPage = () => {
         }
     };
 
-    const fetchTags = async () => {
-        try {
-            const { data } = await BookService.getTags(String(bookId));
-            setTags(data)
-        } catch (e) {
-            console.error(e)
-        }
-    }
+  
 
     useEffect(() => {
         setHeaderVersion('minimized');
-        fetchTags()
+
         fetchBookDetails();
     }, [setHeaderVersion, bookId]);
 
@@ -169,7 +162,7 @@ const BookDetailsPage = () => {
                 isBookmarked={isBookmarked}
                 onToggleBookmark={toggleBookmark}
             />
-
+         
             {bookDetails.bookImg ? (
                 <img
                     src={'http://localhost:3200' + bookDetails.bookImg}
@@ -193,13 +186,6 @@ const BookDetailsPage = () => {
                     <div className={styles.ratingContainer}>
                         <p className={styles.reviewsCount}>Рейтинг книги: {bookDetails.averageRating}/5</p>
                     </div>
-                    {/*  <div className={styles.separator}></div> */}
-                    {/* <div className={styles.bookmarksContainer}>
-                        <p className={styles.bookmarksCount}>
-                            {isBookmarked ? 1 : 0}<br />
-                            разів додано до закладок
-                        </p>
-                    </div> */}
                 </div>
 
                 <div className={styles.buttons}>

@@ -11,6 +11,8 @@ const DirectoriesPage = () => {
     const setHeaderVersion = useHeaderStore(store => store.setHeaderVersion)
     const setRequestUrl = useHeaderStore((store) => store.setRequestUrl);
     const response = useHeaderStore(store => store.response);
+    const searchValue = useHeaderStore(store => store.value)
+
     useEffect(() => {
         setHeaderVersion('normal')
         const fetchDirectories = async () => {
@@ -30,6 +32,10 @@ const DirectoriesPage = () => {
     useEffect(() => {
         setDirectories(response);
     }, [response])
+
+    useEffect(()=>{
+        setRequestUrl("/directory/search-directories?directoryName="+ searchValue)
+    },[searchValue])
 
     return (
         <div className={`${styles.directories} container`}>

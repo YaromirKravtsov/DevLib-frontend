@@ -25,6 +25,6 @@ export default class BookMarksPageService {
         }
         console.log('Sending DELETE request for bookmark ID:', bookmarkId);
         // Використовуємо DELETE метод для видалення закладки
-        await $api.delete(`/bookmark/add-bookmark/${bookmarkId}`);
+        await $api.delete(`/bookmark/${bookmarkId}`);
     }
 }
