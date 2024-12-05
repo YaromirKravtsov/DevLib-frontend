@@ -25,6 +25,8 @@ interface BearState {
   logout: () => void;
   loginWithGoogle: (dto: IGoogleRes) => void,
   loginWithGithub: (code: string) => void
+  isBanned: boolean; 
+  setIsBanned: (value: boolean) => void;
 }
 export const useAuthStore = create<BearState>()(
   devtools((set) => ({
@@ -36,6 +38,8 @@ export const useAuthStore = create<BearState>()(
     setRole: (role: string) => set(() => ({ role })),
     isLoading: true,
     setIsLoading: (value: boolean) => set(() => ({ isLoading: value })),
+    isBanned: false,
+    setIsBanned: (value: boolean) => set(() => ({ isBanned: value })),
     login: async (email: string, password: string) => {
       set({ isLoading: true });
       try {
@@ -52,6 +56,10 @@ export const useAuthStore = create<BearState>()(
       } catch (error: any) {
         console.error(error);
         set({ isLoading: false });
+        if (error.response?.data === "User is banned.") {
+          set({ isBanned: true });
+        }
+        console.log(error.response?.data)
       }
     },
     loginWithGoogle: async (dto: IGoogleRes) => {

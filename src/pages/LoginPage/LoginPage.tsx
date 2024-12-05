@@ -11,6 +11,7 @@ import LoginService from './api/LoginService';
 import { validateStringFields } from '../../helpers/checkStringFields';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import PasswordResetPopup from './PasswordResetPopup';
+import BanPopup from '../../components/BanPopUp/BanPopUp';
 
 
 const CLIENT_ID_GUTHUB = 'Ov23liVP1fdpjqeZ6yPh'
@@ -24,6 +25,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [isResetPopupOpen, setIsResetPopupOpen] = useState<boolean>(false);
+    const [isBanPopUpOpen, setIsBanPopUpOpen] = useState<boolean>(false);
 
   const login = useAuthStore(store => store.login)
   const loginWithGoogle = useAuthStore(store => store.loginWithGoogle)
@@ -32,19 +34,27 @@ const LoginPage = () => {
   
   const loggedIn = useAuthStore(store => store.loggedIn)
   const setLoggedIn = useAuthStore(store => store.setLoggedIn)
+  const isBanned = useAuthStore(store => store.isBanned);
+  const setIsBanned = useAuthStore(store => store.setIsBanned);
   const navigate = useNavigate()
 
   const handelLogin = async () => {
-    console.log(validateStringFields({ email, password }))
-    //TODO validation
     if (validateStringFields({ email, password })) {
       try {
-        await login(email, password)
-      } catch (e) {
-        alert(e)
+        await login(email, password);
+      } catch (error: any) {
+        console.error("Login failed:", error);
       }
     }
-  }
+  };
+
+  useEffect(() => {
+    if (isBanned) {
+      setIsBanPopUpOpen(true);
+    }
+  }, [isBanned]); // Сработает, как только isBanned станет true
+  
+  
 /*   const loginWithGoogle = useGoogleLogin({
     onSuccess: credentialResponse => console.log(credentialResponse),
   }); */
@@ -121,6 +131,10 @@ const LoginPage = () => {
           {/* Відображення попапу для скидання паролю */}
           {isResetPopupOpen && (
               <PasswordResetPopup onClose={() => setIsResetPopupOpen(false)} />
+          )}
+           {/* Відображення попапу для блокування */}
+          {isBanPopUpOpen && (
+              <BanPopup onClose={() => setIsBanPopUpOpen(false)} />
           )}
     </div>
   )
