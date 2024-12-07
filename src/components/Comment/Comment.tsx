@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react'; 
+import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Імпортуємо Link з react-router-dom
 import styles from './Comment.module.css';
 import commentIcon from '../../assets/images/icons/comment.png';
 import { ICommentItem } from '../../app/models/ICommentItem';
@@ -21,14 +22,13 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = 'auto';
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Corrected interpolation
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Виправлена інтерполяція
     }
   }, [newReply]);
 
   const handleAddReply = () => {
-    console.log(comment);
     if (newReply.trim()) {
-      onAddReply((comment as ICommentItem).commentId, newReply);
+      onAddReply(comment.commentId, newReply);
       setNewReply('');
       setIsInputFocused(false);
       resetTextareaHeight();
@@ -57,20 +57,33 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
   };
 
   const countAllComments = (comment: ICommentItem): number => {
-    // Считаем текущий комментарий (1) + вложенные комментарии
     return 1 + (comment.comments?.reduce((total, nestedComment) => total + countAllComments(nestedComment), 0) || 0);
   };
-  
+
   return (
     <div className={styles.commentContainer}>
-      <div className={styles.userIcon}></div>
+      {/* Клікбельна іконка користувача та ім'я */}
+      <div className={styles.userIcon}>
+  <Link to={`/account/${comment.userId}`} className={styles.userProfileLink}>
+    <img src={comment.userImg} alt="User Icon" className={styles.userIconImage} />
+  </Link>
+</div>
+
       <div className={styles.commentContent}>
         <div className={styles.commentHeader}>
-          <span className={styles.userName}><b>{(comment as ICommentItem).authorName}</b></span> ・<span className={styles.commentDate}>{formattedDate}</span>
+          <span className={styles.userName}>
+            <b>
+              <Link to={`/account/${comment.userId}`} className={styles.userProfileLink}>
+                {comment.authorName}
+              </Link>
+            </b>
+          </span> 
+          ・
+          <span className={styles.commentDate}>{formattedDate}</span>
         </div>
         <div className={styles.commentTextContainer}>
           <div className={styles.verticalLine}></div>
-          <div className={styles.commentText}>{(comment as ICommentItem).text}</div>
+          <div className={styles.commentText}>{comment.text}</div>
         </div>
      
         <div className={styles.replyActions}>

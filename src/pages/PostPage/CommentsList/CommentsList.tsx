@@ -14,6 +14,7 @@ interface CommentType {
 interface CommentWithRepliesProps {
   comment: ICommentItem;
   onAddReply: (commentId: string, text: string) => void
+  onUserClick?: (userId: string) => void;
 }
 
 // Компонент для рендера комментария с вложениями
