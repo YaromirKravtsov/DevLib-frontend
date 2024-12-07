@@ -35,7 +35,7 @@ const PostPage: React.FC = () => {
     try {
       setLoading(true);
       const { data } = await PostPageService.getPost(postId!);
-      console.log(data.comments)
+      console.log(data)
       setComments(data.comments)
       setPost(data);
     } catch (error) {
