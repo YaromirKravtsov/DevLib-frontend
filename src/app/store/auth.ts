@@ -32,91 +32,117 @@ export const useAuthStore = create<BearState>()(
   devtools((set) => ({
     userId: '',
     loggedIn: false,
+    role: '',
+    isLoading: true,
+    isBanned: false,
+
     setUserId: (userId: string) => set(() => ({ userId })),
     setLoggedIn: (value: boolean) => set(() => ({ loggedIn: value })),
-    role: '',
     setRole: (role: string) => set(() => ({ role })),
-    isLoading: true,
     setIsLoading: (value: boolean) => set(() => ({ isLoading: value })),
-    isBanned: false,
     setIsBanned: (value: boolean) => set(() => ({ isBanned: value })),
+
     login: async (email: string, password: string) => {
       set({ isLoading: true });
       try {
         const { data } = await AppService.login(email, password);
         const decodedToken: any = jwtDecode(data.token);
+
+        const userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+
         set({
           loggedIn: true,
-          role: (decodedToken.role == 'Client') ? 'user' : (decodedToken.role == 'Admin') ? 'admin' : '',
+          role: decodedToken.role === 'Client' ? 'user' : decodedToken.role === 'Admin' ? 'admin' : '',
           isLoading: false,
-          userId: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+          userId,
         });
 
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', userId); // Додаємо збереження userId
       } catch (error: any) {
         console.error(error);
         set({ isLoading: false });
         if (error.response?.data === "User is banned.") {
           set({ isBanned: true });
         }
-        console.log(error.response?.data)
       }
     },
+
     loginWithGoogle: async (dto: IGoogleRes) => {
       set({ isLoading: true });
       try {
         const { data } = await AppService.loginGoogle({ userId: dto.clientId, token: dto.credential });
         const decodedToken: any = jwtDecode(data.token);
+
+        const userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+
         set({
           loggedIn: true,
-          role: (decodedToken.role == 'Client') ? 'user' : (decodedToken.role == 'Admin') ? 'admin' : '',
+          role: decodedToken.role === 'Client' ? 'user' : decodedToken.role === 'Admin' ? 'admin' : '',
           isLoading: false,
-          userId: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+          userId,
         });
 
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', userId); // Зберігаємо userId
       } catch (error: any) {
         console.error(error);
         set({ isLoading: false });
       }
     },
+
     loginWithGithub: async (code: string) => {
       set({ isLoading: true });
       try {
         const { data } = await AppService.loginGitHub(code);
         const decodedToken: any = jwtDecode(data.token);
+
+        const userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+
         set({
           loggedIn: true,
-          role: (decodedToken.role == 'Client') ? 'user' : (decodedToken.role == 'Admin') ? 'admin' : '',
+          role: decodedToken.role === 'Client' ? 'user' : decodedToken.role === 'Admin' ? 'admin' : '',
           isLoading: false,
-          userId: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+          userId,
         });
 
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', userId); // Зберігаємо userId
       } catch (error: any) {
         console.error(error);
         set({ isLoading: false });
       }
     },
+
     checkAuth: async () => {
       set({ isLoading: true });
       try {
-        const decodedToken: any = jwtDecode(localStorage.getItem('token') as string);
+        const token = localStorage.getItem('token');
+        if (!token) throw new Error('No token found');
+
+        const decodedToken: any = jwtDecode(token);
+
+        const userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+
         set({
           loggedIn: true,
-          role: (decodedToken.role == 'Client') ? 'user' : (decodedToken.role == 'Admin') ? 'admin' : '',
+          role: decodedToken.role === 'Client' ? 'user' : decodedToken.role === 'Admin' ? 'admin' : '',
           isLoading: false,
-          userId: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+          userId,
         });
+
+        localStorage.setItem('userId', userId); // Додаємо збереження userId у checkAuth
       } catch (error: any) {
-        console.error(error.response?.data?.message);
-        set({ isLoading: false, loggedIn: false });  // Обязательно сбрасываем isLoading и loggedIn в случае ошибки
+        console.error(error);
+        set({ isLoading: false, loggedIn: false });
       }
     },
-    logout: () => {
-      set({ loggedIn: false, role: '', isLoading: false });
-      localStorage.removeItem('token');
 
-    }
+    logout: () => {
+      set({ loggedIn: false, role: '', isLoading: false, userId: '' }); // Скидаємо userId при виході
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId'); // Видаляємо userId
+    },
   }))
 );
+

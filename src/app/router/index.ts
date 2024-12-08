@@ -46,7 +46,7 @@ export enum RouteNames {
   USERS_ADMIN = '/users',
   BOOKS = "/books",
   DIRECTORIES = "/directories",
-  ACCOUNT = "/account",
+  ACCOUNT = "/account/:userId",
   REGISTER = "/register",
   REFERENCE = "/reference/:directoryId",
   BOOK_DETAILS = "/books/:bookId", 
@@ -85,10 +85,11 @@ export const adminRoutes: IRoute[] = [
 // маршруты только для пользователя 
 export const userRoutes: IRoute[] = [
   { path: RouteNames.LOGIN, element: LoginPage },
-  { path: RouteNames.ACCOUNT, element: AccountPage },
+ 
   { path: RouteNames.BOOK_MARKS, element: BookMarksPage },
   { path: RouteNames.EDIT_PROFILE, element: EditProfilePage },
   { path: RouteNames.CREATE_POST, element: CreatePost },
+  { path: RouteNames.ACCOUNT, element: AccountPage },
 
   
 
@@ -108,5 +109,6 @@ export const publicRoutes: IRoute[] = [
   { path: RouteNames.POST, element: PostPage },
   { path: RouteNames.PASSWORDFORGETRESET, element: PasswordForgetReset },
   { path: RouteNames.ARTICLE, element: ArticlePage },
+  
 
 ]

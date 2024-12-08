@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react'; 
+import { Link } from 'react-router-dom'; // Імпортуємо Link з react-router-dom
 import styles from './Comment.module.css';
 import commentIcon from '../../assets/images/icons/comment.png';
 import { ICommentItem } from '../../app/models/ICommentItem';
 import { formatDate } from '../../helpers/formatDate';
-import CommentEditor from '../CommentEditor/CommentEditor'; // Assuming this is your new component
+import CommentEditor from '../CommentEditor/CommentEditor'; 
 
 interface ICommentProps {
   comment: ICommentItem;
@@ -36,10 +37,24 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
 
   return (
     <div className={styles.commentContainer}>
-      <div className={styles.userIcon}></div>
+      {/* Клікбельна іконка користувача та ім'я */}
+      <div className={styles.userIcon}>
+  <Link to={`/account/${comment.userId}`} className={styles.userProfileLink}>
+    <img src={comment.userImg} alt="User Icon" className={styles.userIconImage} />
+  </Link>
+</div>
+
       <div className={styles.commentContent}>
         <div className={styles.commentHeader}>
-          <span className={styles.userName}><b>{(comment as ICommentItem).authorName}</b></span> ・<span className={styles.commentDate}>{formattedDate}</span>
+          <span className={styles.userName}>
+            <b>
+              <Link to={`/account/${comment.userId}`} className={styles.userProfileLink}>
+                {comment.authorName}
+              </Link>
+            </b>
+          </span> 
+          ・
+          <span className={styles.commentDate}>{formattedDate}</span>
         </div>
         <div className={styles.commentTextContainer}>
           <div className={styles.verticalLine}></div>

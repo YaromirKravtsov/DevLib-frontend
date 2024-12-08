@@ -1,6 +1,6 @@
 import $api from "../../../app/api/http";
 
-// ���������� ��� ������ API
+// Типи для постів і коментарів
 export interface Post {
     postId: string;
     text: string;
@@ -23,24 +23,20 @@ export interface UserData {
     comments: Comment[];
 }
 
-// ������� ��� ��������� ����� �����������
+// Функція для отримання даних користувача
 export const getUserData = async (userId: string): Promise<UserData> => {
     try {
-        //console.log("����� �� ��������� ����� ����������� ��� ID:", userId); // ��� ��� ������
+        console.log("Fetching data for userId:", userId);
 
-        // ������������� $api ��� ��������� ����� ����� API
         const response = await $api.get(`/user/${userId}`);
-
         if (response.status !== 200) {
-            throw new Error("�� ������� �������� ���� �����������, ������� �������.");
+            throw new Error("Не вдалося отримати дані користувача.");
         }
 
-        const data = response.data;  // API ��� ������� ��'���, ���� ������� ����� �������� ����
-        //console.log("���� �����������:", data); // ��� ��� ��������
-
-        return data;
+        console.log("User data fetched:", response.data);
+        return response.data;
     } catch (err: any) {
-        console.error("������� ��� ��������� ����� �����������:", err);
-        throw new Error("������� ��� ��������� ����� �����������: " + err.message);
+        console.error("Error fetching user data:", err);
+        throw new Error("Помилка при отриманні даних користувача: " + err.message);
     }
 };
