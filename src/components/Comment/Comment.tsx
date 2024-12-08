@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react'; 
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './Comment.module.css';
 import commentIcon from '../../assets/images/icons/comment.png';
 import { ICommentItem } from '../../app/models/ICommentItem';
 import { formatDate } from '../../helpers/formatDate';
+import CommentEditor from '../CommentEditor/CommentEditor'; // Assuming this is your new component
 
 interface ICommentProps {
   comment: ICommentItem;
@@ -14,53 +15,25 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
   const [newReply, setNewReply] = useState<string>('');
   const [isRepliesVisible, setIsRepliesVisible] = useState<boolean>(false);
   const [isReplyFieldVisible, setIsReplyFieldVisible] = useState<boolean>(false);
-  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-
-  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
-
-  useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.style.height = 'auto';
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Corrected interpolation
-    }
-  }, [newReply]);
 
   const handleAddReply = () => {
-    console.log(comment);
     if (newReply.trim()) {
       onAddReply((comment as ICommentItem).commentId, newReply);
       setNewReply('');
-      setIsInputFocused(false);
-      resetTextareaHeight();
     }
   };
+  
+  
 
   const toggleRepliesVisibility = () => {
     setIsRepliesVisible(!isRepliesVisible);
     setIsReplyFieldVisible(!isReplyFieldVisible);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewReply(e.target.value);
-  };
-
-  const handleCancel = () => {
-    setNewReply('');
-    setIsInputFocused(false);
-    resetTextareaHeight();
-  };
-
-  const resetTextareaHeight = () => {
-    if (textAreaRef.current) {
-      textAreaRef.current.style.height = '21px';
-    }
-  };
-
   const countAllComments = (comment: ICommentItem): number => {
-    // Считаем текущий комментарий (1) + вложенные комментарии
     return 1 + (comment.comments?.reduce((total, nestedComment) => total + countAllComments(nestedComment), 0) || 0);
   };
-  
+
   return (
     <div className={styles.commentContainer}>
       <div className={styles.userIcon}></div>
@@ -70,29 +43,28 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
         </div>
         <div className={styles.commentTextContainer}>
           <div className={styles.verticalLine}></div>
-          <div className={styles.commentText}>{(comment as ICommentItem).text}</div>
+          {/* Используем dangerouslySetInnerHTML для рендера текста с HTML */}
+          <div
+            className={styles.commentText}
+            dangerouslySetInnerHTML={{ __html: (comment as ICommentItem).text }}
+          />
         </div>
-     
+
         <div className={styles.replyActions}>
           <button className={styles.iconButton} onClick={toggleRepliesVisibility}>
-            <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {countAllComments(comment) - 1}
+            <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} />
+            {countAllComments(comment) - 1}
           </button>
           {isReplyFieldVisible && (
             <div className={styles.commentInputContainer}>
-              <textarea
-                ref={textAreaRef}
-                className={`${styles.commentInput} ${isInputFocused ? styles.expanded : ''}`}
-                placeholder="Додати відповідь"
-                value={newReply}
-                onFocus={() => setIsInputFocused(true)}
-                onChange={handleInputChange}
-              />
-              {isInputFocused && (
-                <div className={styles.commentActions}>
-                  <button className={styles.sendButton} onClick={handleAddReply}>Відправити</button>
-                  <button className={styles.cancelButton} onClick={handleCancel}>Відмінити</button>
-                </div>
-              )}
+              <div className={styles.commentInput}>
+                <CommentEditor
+                  value={newReply}
+                  onChange={setNewReply}
+                  onSubmit={handleAddReply}
+                  onCancel={() => setNewReply('')}
+                />
+              </div>
             </div>
           )}
         </div>
