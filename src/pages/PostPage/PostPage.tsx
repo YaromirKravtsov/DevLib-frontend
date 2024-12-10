@@ -8,7 +8,7 @@ import { IPostItem } from './models/IPostItem';
 import { ICommentItem } from '../../app/models/ICommentItem';
 import PostPageService from './api/PostPageService';
 import { useAuthStore } from '../../app/store/auth';
-import Comment from '../../components/Comment/Comment';
+import CommentEditor from '../../components/CommentEditor/CommentEditor';
 import { formatDate } from '../../helpers/formatDate';
 import CommentsList from './CommentsList/CommentsList';
 
@@ -29,7 +29,9 @@ const PostPage: React.FC = () => {
   const [newCommentText, setNewCommentText] = useState<string>("");
   const userId = useUserId();
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [comment, setComment] = useState('');
   const navigate = useNavigate();
+  const sortedComments = comments.sort((a, b) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime());
   const role = useAuthStore(store => store.role)
   const fetchPost = async () => {
     try {
@@ -58,15 +60,7 @@ const PostPage: React.FC = () => {
     navigate('/forum');
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewCommentText(e.target.value);
-  };
-
   const handleAddComment = async () => {
-    if (!newCommentText.trim()) {
-      alert('Заповніть поле коментаря!')
-      return
-    };
     console.log({
       userId, text: newCommentText, postId: String(postId)
     })
@@ -133,24 +127,16 @@ const PostPage: React.FC = () => {
         </button>
       </div>
       {role !== '' &&
-        <div className={styles.commentInputContainer}>
-          <textarea
-            ref={textAreaRef}
+        <div>
+          <CommentEditor
             value={newCommentText}
-            onChange={handleInputChange}
-            onFocus={() => setIsInputFocused(true)}
-            placeholder="Напишите комментарий..."
-            className={styles.commentInput}
-          />
-          {isInputFocused && (
-            <div className={styles.commentActions}>
-              <button onClick={handleAddComment} className={styles.sendButton}>Отправить</button>
-              <button onClick={() => setIsInputFocused(false)} className={styles.cancelButton}>Отмена</button>
-            </div>
-          )}
+            onChange={setNewCommentText}
+            onSubmit={handleAddComment}
+            onCancel={() => setNewCommentText('')}
+          /> 
         </div>
       }
-      <CommentsList comments={comments} onAddReply={handleAddReply} />
+      <CommentsList comments={sortedComments} onAddReply={handleAddReply} />
     </div>
   );
 };
