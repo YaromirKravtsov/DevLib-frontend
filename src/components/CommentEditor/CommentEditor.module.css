@@ -39,7 +39,7 @@
 .editor .ql-toolbar {
   border: none !important;
   stroke:none;
-  background: #fff !important; /* Обновленный фон панели инструментов */
+  background: #fff !important; 
   border-radius: 20px 20px 0 0;
   padding: 8px;
   display: flex;
@@ -61,7 +61,7 @@
   padding: 10px;
   font-size: 14px;
   line-height: 1.5;
-  background-color: #f9fafc; /* Легкий фон для зоны редактирования */
+  background-color: #f9fafc; 
   border-radius: 0 0 20px 20px;
   border: none;
 }
@@ -75,17 +75,27 @@
   margin: 0;
   padding: 0;
   font-size: 16px;
+  color: #000;
+  display: list-item;
+  list-style-type: none;
 }
 
 .ql-editor li,
-.editor ul li {
-  margin-bottom: 10px; /* Встановлено більший відступ між пунктами */
+.editor ol li {
+  margin-bottom: 10px; 
   margin: 0;
   padding: 0;
-  display:table-column; /* Встановлено відображення блоком для кожного елемента */
-  list-style-type: none !important; /* Якщо хочете прибрати маркери */
   padding: 0%;
+  display: list-item;
 }
+
+.ql-editor ul,
+.editor ul {
+  list-style-type: disc;
+  padding-left: 0px;
+  margin: 0px 0;
+}
+
 
 /* Блоки кода */
 .ql-code-block {
@@ -97,6 +107,18 @@
   white-space: pre-wrap;
 }
 
+.ql-editor blockquote,
+.editor blockquote {
+  font-style: italic; 
+  color: #555;
+  border-left: 4px solid #ccc; 
+  padding: 10px 15px; 
+  margin: 10px 0; 
+  background-color: #f9f9f9; 
+  border-radius: 4px; 
+}
+
+
 /* Стили кнопок */
 .actions {
   gap: 10px;
@@ -104,9 +126,9 @@
   margin: 10px;
   margin-right: 100px;
   width: 90px;
-  grid-row: 1; /* Занимаем первую строку вместе с редактором */
-  grid-column: 2; /* Занимаем вторую колонку */
-  justify-self:flex-end; /* Выравниваем кнопки по правому краю */
+  grid-row: 1;
+  grid-column: 2;
+  justify-self:flex-end; 
   align-self: end; 
 }
 .submitButton:hover {
@@ -140,4 +162,16 @@
 .ql-container {
   max-width: 100%;
   overflow: auto !important;
+}
+
+.ql-align-left {
+  text-align: left;
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: right;
 }

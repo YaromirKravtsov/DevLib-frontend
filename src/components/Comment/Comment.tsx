@@ -12,6 +12,7 @@ interface ICommentProps {
 }
 
 const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
+  const authorImg = process.env.STATIC_URL || 'http://localhost:3200';
   const formattedDate = formatDate(comment.dateTime);
   const [newReply, setNewReply] = useState<string>('');
   const [isRepliesVisible, setIsRepliesVisible] = useState<boolean>(false);
@@ -38,11 +39,17 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
   return (
     <div className={styles.commentContainer}>
       {/* Клікбельна іконка користувача та ім'я */}
-      <div className={styles.userIcon}>
   <Link to={`/account/${comment.userId}`} className={styles.userProfileLink}>
-    <img src={comment.userImg} alt="User Icon" className={styles.userIconImage} />
+  <div className={styles.userIcon}>
+          {comment.authorImg ? (
+            <img
+              src={authorImg + comment.authorImg}
+              alt={comment.authorName}
+              className={styles.authorImage}
+            />
+          ) : null}
+        </div>
   </Link>
-</div>
 
       <div className={styles.commentContent}>
         <div className={styles.commentHeader}>
@@ -67,7 +74,7 @@ const Comment: React.FC<ICommentProps> = ({ comment, onAddReply }) => {
 
         <div className={styles.replyActions}>
           <button className={styles.iconButton} onClick={toggleRepliesVisibility}>
-            <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} />
+            <img src={commentIcon} className={styles.commentIcon} />
             {countAllComments(comment) - 1}
           </button>
           {isReplyFieldVisible && (

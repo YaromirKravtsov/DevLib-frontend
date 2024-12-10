@@ -4,13 +4,24 @@
 }
 
 .userIcon {
-  width: 40px;
-  height: 40px;
-  background-color: #ccc;
+  width: 44px;
+  height: 44px;
+  background-color: #d9d9d9;
   border-radius: 50%;
   margin-right: 10px;
-  flex-shrink: 0; 
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; 
 }
+
+.authorImage {
+  width: 100%; 
+  height: 100%;
+  object-fit: cover; 
+  border-radius: 50%; 
+}
+
 
 .commentContent {
   flex-grow: 1;
@@ -19,7 +30,8 @@
 .commentTextContainer ol,
 .commentTextContainer ul {
   padding-left: 5px;
-  margin: 5px 5px;
+  margin: 5px 10px;
+  display:block;
 }
 
 .commentTextContainer li {
@@ -27,11 +39,57 @@
   margin-bottom: 10px;
 }
 
+.commentTextContainer ul {
+  list-style-type: disc;
+  margin-left: 20px; 
+}
+
+.commentTextContainer ul li {
+  font-size: 16px; 
+  margin-bottom: 8px; 
+}
+
 .commentTextContainer {
   display: flex;
   align-items: flex-start;
   margin: 5px 0;
   position: relative;
+}
+
+.commentTextContainer h1 {
+  font-size: 24px; 
+  font-weight: bold; 
+  margin: 10px 0; 
+  color: #333; 
+}
+
+.commentTextContainer blockquote {
+  font-style: italic; 
+  color: #555; 
+  border-left: 4px solid #ccc; 
+  padding: 10px 15px; 
+  margin: 10px 0;
+  background-color: #f9f9f9; 
+  border-radius: 4px; 
+  display: flex;
+  margin: 5px 0;
+  position: relative;
+}
+.commentText {
+  flex-grow: 1;
+  word-break: break-word;
+}
+
+.commentText .ql-align-left {
+  text-align: left;
+}
+
+.commentText .ql-align-center {
+  text-align: center;
+}
+
+.commentText .ql-align-right {
+  text-align: right;
 }
 
 .verticalLine {

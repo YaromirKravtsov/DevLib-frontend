@@ -13,9 +13,7 @@ interface CommentEditorProps {
 const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit, onCancel }) => {
   const [isFocused, setIsFocused] = useState(false);
 
-  // useEffect для зміни стилю після рендеру компонента
   useEffect(() => {
-    // Явно вказуємо тип елемента, щоб мати доступ до властивості 'style'
     const toolbar = document.querySelector('.ql-toolbar.ql-snow') as HTMLElement;
     const container = document.querySelector('.ql-container.ql-snow') as HTMLElement;
     if (toolbar) {
@@ -24,7 +22,7 @@ const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit
     if(container){
       container.style.border = 'none';
     }
-  }, [isFocused]); // Ефект викликається при зміні стану isFocused
+  }, [isFocused]); 
 
   const handleSubmit = () => {
     if (value.trim()) {
@@ -37,14 +35,12 @@ const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit
 
   const modules = {
     toolbar: [
-      [{ 'font': [] }, { 'size': [] }],
+      [{ 'font': [] }],
       ['bold', 'italic', 'underline', 'strike'],
       [{ 'color': [] }, { 'background': [] }],
       [{ 'script': 'sub'}, { 'script': 'super' }],
       [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block'],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'align': [] }],
-      ['clean']
     ],
   };
 
