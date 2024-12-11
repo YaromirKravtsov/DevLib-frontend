@@ -55,3 +55,51 @@ li:hover {
         text-align: left; 
     }
 }
+
+
+.shareButton {
+    position: relative;
+    background: #EAEDEF;
+    color: #0B7DCF;
+    border: none;
+    border-radius: 16px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width:fit-content;
+    height: fit-content;
+    font-size: 20px;
+    margin-top: 30px;
+
+}
+.shareMenu button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1; 
+    display: flex; 
+    align-items: center; 
+
+  }
+
+.shareMenu {
+  display: flex;
+  gap: 10px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  align-items: center; 
+  justify-content: center; 
+  padding: 10px; 
+  height: 38px; 
+  margin-top: 30px;
+  margin-left: -10px;
+}
+
+  .contentHeader{
+    display:flex;
+    gap: 20px;
+    align-items: center;
+  }

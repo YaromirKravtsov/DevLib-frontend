@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './PostPage.module.css';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaShareAlt, FaClipboard  } from 'react-icons/fa';
 import { useHeaderStore } from '../../layouts/Header/store/header';
 import commentIcon from '../../assets/images/icons/comment.png';
 import { IPostItem } from './models/IPostItem';
@@ -11,6 +11,7 @@ import { useAuthStore } from '../../app/store/auth';
 import CommentEditor from '../../components/CommentEditor/CommentEditor';
 import { formatDate } from '../../helpers/formatDate';
 import CommentsList from './CommentsList/CommentsList';
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
 
 
 
@@ -33,6 +34,8 @@ const PostPage: React.FC = () => {
   const navigate = useNavigate();
   const sortedComments = comments.sort((a, b) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime());
   const role = useAuthStore(store => store.role)
+  const [menuVisible, setMenuVisible] = useState(false);
+
   const fetchPost = async () => {
     try {
       setLoading(true);
@@ -97,6 +100,12 @@ const PostPage: React.FC = () => {
   if (loading) return <p>Загрузка...</p>;
   if (!post) return <p>Пост не найден.</p>;
 
+  const shareUrl = `${window.location.origin}/posts/${postId}`;
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareUrl);
+    alert(' Адресу скопійовано в буфер обміну!');
+  };
+  
   return (
     <div className={styles.postContainer}>
       <div className={styles.postHeader}>
@@ -125,6 +134,25 @@ const PostPage: React.FC = () => {
         <button className={styles.iconButton} onClick={() => { }}>
           <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {countAllCommentsInList(comments)}
         </button>
+        <button className={styles.shareButton} onClick={() => setMenuVisible(!menuVisible)}>
+          <FaShareAlt />
+        </button>
+        {menuVisible && (
+          <div className={styles.shareMenu}>
+            <FacebookShareButton url={shareUrl}>
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+            <TwitterShareButton url={shareUrl}>
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+            <LinkedinShareButton url={shareUrl}>
+              <LinkedinIcon size={32} round />
+            </LinkedinShareButton>
+            <button onClick={copyToClipboard}>
+              <FaClipboard size={25} />
+            </button>
+          </div>
+        )}
       </div>
       {role !== '' &&
         <div>
