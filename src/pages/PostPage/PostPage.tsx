@@ -35,7 +35,6 @@ const PostPage: React.FC = () => {
 
   // Завантаження поста та коментарів
   const sortedComments = comments.sort((a, b) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime());
-  const role = useAuthStore(store => store.role)
   const [menuVisible, setMenuVisible] = useState(false);
   const fetchPost = async () => {
     try {
@@ -147,6 +146,7 @@ const PostPage: React.FC = () => {
   
   return (
     <div className={styles.postContainer}>
+      {/* Заголовок посту */}
       <div className={styles.postHeader}>
         <button onClick={handleBack} className={styles.backButton}>
           <FaArrowLeft />
@@ -164,22 +164,26 @@ const PostPage: React.FC = () => {
           <span><b>{post.authorName}</b> • {formatDate(post.dateTime)}</span>
         </div>
       </div>
-
+  
+      {/* Назва посту */}
       <h2 className={styles.postTitle}>{post.postName}</h2>
-
+  
+      {/* Контент посту */}
       <div
         className={`${styles.articleText} custom-text`}
         dangerouslySetInnerHTML={{ __html: post.text || 'Тут буде контент статті' }}
       />
-
+  
       <div className={styles.postFooter}>
         <button className={styles.iconButton} onClick={() => { }}>
           <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} />
           {countAllCommentsInList(comments)}
         </button>
+  
         <button className={styles.shareButton} onClick={() => setMenuVisible(!menuVisible)}>
           <FaShareAlt />
         </button>
+  
         {menuVisible && (
           <div className={styles.shareMenu}>
             <FacebookShareButton url={shareUrl}>
@@ -197,41 +201,32 @@ const PostPage: React.FC = () => {
           </div>
         )}
       </div>
-
-      {role !== '' &&
+  
+      {/* Коментарі */}
+      {role !== '' && (
         <div>
           <CommentEditor
             value={newCommentText}
-            onChange={handleInputChange}
-            onFocus={() => setIsInputFocused(true)}
+            onChange={setNewCommentText}
+            onSubmit={handleAddComment}
+            onCancel={() => setNewCommentText('')}
             placeholder="Напишіть коментар..."
             className={styles.commentInput}
           />
-          {isInputFocused && (
-            <div className={styles.commentActions}>
-              <button onClick={handleAddComment} className={styles.sendButton}>Відправити</button>
-              <button onClick={() => setIsInputFocused(false)} className={styles.cancelButton}>Скасувати</button>
-            </div>
-          )}
         </div>
-      }
-
-
+      )}
+  
+      {/* Список коментарів */}
       <CommentsList
         comments={comments}
         onAddReply={handleAddReply}
         onUpdateComment={handleUpdateComment}
         onDeleteComment={handleDeleteComment}
       />
-            onChange={setNewCommentText}
-            onSubmit={handleAddComment}
-            onCancel={() => setNewCommentText('')}
-          /> 
-        </div>
-      }
-      <CommentsList comments={sortedComments} onAddReply={handleAddReply} />
     </div>
   );
+  
+  
 };
 
 export default PostPage;

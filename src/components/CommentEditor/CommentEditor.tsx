@@ -8,9 +8,11 @@ interface CommentEditorProps {
   onChange: (text: string) => void;
   onSubmit: () => void;
   onCancel: () => void;
+  placeholder?: string; 
+  className?: string;  // Додали placeholder
 }
 
-const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit, onCancel }) => {
+const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit, onCancel, placeholder }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
@@ -19,17 +21,17 @@ const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit
     if (toolbar) {
       toolbar.style.border = 'none';
     }
-    if(container){
+    if (container) {
       container.style.border = 'none';
     }
-  }, [isFocused]); 
+  }, [isFocused]);
 
   const handleSubmit = () => {
     if (value.trim()) {
       onSubmit();
       setIsFocused(false);
     } else {
-      alert('Поле комментария не может быть пустым.');
+      alert('Поле комментаря не може бути порожнім.');
     }
   };
 
@@ -38,9 +40,9 @@ const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit
       [{ 'font': [] }],
       ['bold', 'italic', 'underline', 'strike'],
       [{ 'color': [] }, { 'background': [] }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
+      [{ 'script': 'sub' }, { 'script': 'super' }],
       [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
     ],
   };
 
@@ -58,11 +60,11 @@ const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit
             value={value}
             onChange={onChange}
             modules={modules}
-            placeholder="Додати коментар"
+            placeholder={placeholder}  
           />
           <div className={styles.actions}>
-            <button className={styles.submitButton} onClick={handleSubmit}>Comment</button>
-            <button className={styles.cancelButton} onClick={handleCancel}>Cancel</button>
+            <button className={styles.submitButton} onClick={handleSubmit}>Коментувати</button>
+            <button className={styles.cancelButton} onClick={handleCancel}>Скасувати</button>
           </div>
         </div>
       ) : (
@@ -70,7 +72,7 @@ const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit
           className={styles.placeholder}
           onClick={() => setIsFocused(true)}
         >
-          Додати коментар
+          {placeholder || 'Додати коментар'}
         </div>
       )}
     </div>
