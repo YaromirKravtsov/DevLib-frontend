@@ -41,6 +41,18 @@ const Forum: React.FC = () => {
     setHeaderVersion('normal');
   }, [setHeaderVersion]);
 
+    // Видалення поста
+    const handleDeletePost = async (postId: number) => {
+        try {
+            await ForumPageService.deletePost(postId); // Викликаємо метод для видалення
+            setPosts(prevPosts => prevPosts.filter(post => post.postId !== postId)); // Оновлюємо список постів
+            alert('Пост успішно видалено'); // Сповіщення про успішне видалення
+        } catch (error) {
+            console.error('Error deleting post:', error);
+            alert('Сталася помилка при видаленні поста');
+        }
+    };
+
   // Тогл для фільтра
   const toggleDropdown = () => {
     setDropdownOpen(prev => !prev); // Toggle the dropdown
@@ -57,15 +69,24 @@ const Forum: React.FC = () => {
           <button onClick={handleCreateNewPost} className={styles.newPostButton}>Створити новий пост</button>
         }
       </div>
-      <div className={styles.postsContainer}>
-        {posts.length > 0 ? (
-          posts.map((post) => (
-           
-            <Post key={post.postId} {...post} />
-          ))
-        ) : (
-          <p>Завантаження постів...</p>
-        )}
+          <div className={styles.postsContainer}>
+              {posts.length > 0 ? (
+                  posts.map((post) => (
+                      <div key={post.postId} className={styles.postWithDelete}>
+                          <Post {...post} />
+                          {role === 'admin' && (
+                              <button
+                                  onClick={() => handleDeletePost(post.postId)}
+                                  className={styles.deletePostButton}
+                              >
+                                  Видалити
+                              </button>
+                          )}
+                      </div>
+                  ))
+              ) : (
+                  <p>Завантаження постів...</p>
+              )}
       </div>
     </div>
   );
