@@ -41,6 +41,9 @@ export default class DirectoryManagerService {
         return $api.delete('directory/delete-article/' + id)
     }
 
-  
+    static async deleteDirectory(id: string): Promise<AxiosResponse> {
+        return $api.delete(`directory/${id}`);
+    }
+
 
 }

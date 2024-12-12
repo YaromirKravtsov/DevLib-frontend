@@ -16,6 +16,20 @@ const CommentWithReplies: React.FC<CommentWithRepliesProps> = ({
   onUpdateComment,
   onDeleteComment
 }) => {
+interface CommentType {
+  commentId: string; 
+  text: string;      
+  comments: ICommentItem[]; 
+}
+
+
+
+interface CommentWithRepliesProps {
+  comment: ICommentItem;
+  onAddReply: (commentId: string, text: string) => void
+}
+
+const CommentWithReplies: React.FC<CommentWithRepliesProps> = ({ comment, onAddReply }) => {
   return (
     <div>
       
@@ -52,12 +66,15 @@ interface CommentsListProps {
   onDeleteComment: (commentId: string) => void; 
 }
 
+
 const CommentsList: React.FC<CommentsListProps> = ({
   comments,
   onAddReply,
   onUpdateComment,
   onDeleteComment
 }) => {
+
+const CommentsList: React.FC<CommentsListProps> = ({ comments, onAddReply }) => {
   return (
     <div>
       {comments.map((comment) => (

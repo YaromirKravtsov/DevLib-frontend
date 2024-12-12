@@ -6,6 +6,8 @@ export interface ICommentItem {
     dateTime: string;
     comments: ICommentItem[];
     authorName:string
+
     userImg?: string;  
-    isEditing?: boolean; 
+    isEditing?: boolean;
+    authorImg?: string;   
 }

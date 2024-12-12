@@ -1,0 +1,177 @@
+.commentEditorContainer {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: -20px;
+}
+
+.placeholder {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #0073e6;
+  background: #f9fafc;
+  border: 1px solid #ccc;
+  border-radius: 24px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.placeholder:hover {
+  background: #f0f4f8;
+}
+
+.editor {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 0;
+  width: 100%;
+  grid-row: 1;
+  max-width: 100%; 
+  overflow: auto;
+}
+.ql-snow .ql-stroke {
+  stroke:none;
+}
+/* Панель инструментов Quill */
+.editor .ql-toolbar {
+  border: none !important;
+  stroke:none;
+  background: #fff !important; 
+  border-radius: 20px 20px 0 0;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Основная область редактора */
+.editor .ql-container {
+  stroke:none !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-size: 14px;
+  min-height: 120px;
+  background-color: transparent !important;
+}
+
+.editor .ql-editor {
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #f9fafc; 
+  border-radius: 0 0 20px 20px;
+  border: none;
+}
+
+
+/* Списки и текст */
+.ql-editor ol,
+.ql-editor ul,
+.editor ol,
+.editor ul {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  color: #000;
+  display: list-item;
+  list-style-type: none;
+}
+
+.ql-editor li,
+.editor ol li {
+  margin-bottom: 10px; 
+  margin: 0;
+  padding: 0;
+  padding: 0%;
+  display: list-item;
+}
+
+.ql-editor ul,
+.editor ul {
+  list-style-type: disc;
+  padding-left: 0px;
+  margin: 0px 0;
+}
+
+
+/* Блоки кода */
+.ql-code-block {
+  background-color: #f4f4f4;
+  border-left: 4px solid #ddd;
+  font-family: monospace;
+  padding: 10px;
+  margin: 5px 0;
+  white-space: pre-wrap;
+}
+
+.ql-editor blockquote,
+.editor blockquote {
+  font-style: italic; 
+  color: #555;
+  border-left: 4px solid #ccc; 
+  padding: 10px 15px; 
+  margin: 10px 0; 
+  background-color: #f9f9f9; 
+  border-radius: 4px; 
+}
+
+
+/* Стили кнопок */
+.actions {
+  gap: 10px;
+  display: flex;
+  margin: 10px;
+  margin-right: 100px;
+  width: 90px;
+  grid-row: 1;
+  grid-column: 2;
+  justify-self:flex-end; 
+  align-self: end; 
+}
+.submitButton:hover {
+  background-color: #005bb5;
+}
+
+.cancelButton:hover {
+  background-color: #f0f0f0;
+}
+
+.submitButton {
+  background-color: #0B7DCF;
+  color: #fff;
+  border-radius: 20px;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background-color: #D9D9D9;
+  color: #000;
+  border-radius: 20px;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.ql-container {
+  max-width: 100%;
+  overflow: auto !important;
+}
+
+.ql-align-left {
+  text-align: left;
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: right;
+}

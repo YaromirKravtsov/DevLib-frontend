@@ -97,7 +97,67 @@
     display: flex;
     gap: 20px;
     margin-top: 150px;
+    flex-direction: column;
 }
+.topButtons{
+    display: flex;
+    flex-direction: row;
+}
+.sharePanel {
+    align-items: flex-end;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    right: 120px;
+    gap: 10px;
+}
+
+.shareButton {
+    background: #EAEDEF;
+    color: #0B7DCF;
+    border: none;
+    border-radius: 16px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 65px;
+    font-size: 40px;
+    margin-top: -8px;
+    width: fit-content;
+}
+
+.shareMenu {
+    position: absolute;
+    top: calc(100% + 10px); 
+    left: 0;
+    list-style: none; 
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 65px;
+}
+
+.shareMenu li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shareMenu button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 
 .readButton {
     width: 300px;

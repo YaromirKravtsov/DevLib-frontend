@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './PostPage.module.css';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaShareAlt, FaClipboard  } from 'react-icons/fa';
 import { useHeaderStore } from '../../layouts/Header/store/header';
 import commentIcon from '../../assets/images/icons/comment.png';
 import { IPostItem } from './models/IPostItem';
 import { ICommentItem } from '../../app/models/ICommentItem';
 import PostPageService from './api/PostPageService';
 import { useAuthStore } from '../../app/store/auth';
-import Comment from '../../components/Comment/Comment';
+import CommentEditor from '../../components/CommentEditor/CommentEditor';
 import { formatDate } from '../../helpers/formatDate';
 import CommentsList from './CommentsList/CommentsList';
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
 
 
 const useUserId = () => {
@@ -28,10 +29,14 @@ const PostPage: React.FC = () => {
   const [newCommentText, setNewCommentText] = useState<string>('');
   const userId = useUserId();
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [comment, setComment] = useState('');
   const navigate = useNavigate();
   const role = useAuthStore(store => store.role);
 
   // Завантаження поста та коментарів
+  const sortedComments = comments.sort((a, b) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime());
+  const role = useAuthStore(store => store.role)
+  const [menuVisible, setMenuVisible] = useState(false);
   const fetchPost = async () => {
     try {
       setLoading(true);
@@ -57,16 +62,16 @@ const PostPage: React.FC = () => {
     navigate('/forum');
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewCommentText(e.target.value);
-  };
-
   const handleAddComment = async () => {
+
     if (!newCommentText.trim()) {
       alert('Заповніть поле коментаря!');
       return;
     }
 
+    console.log({
+      userId, text: newCommentText, postId: String(postId)
+    })
     try {
       await PostPageService.createComment({
         userId,
@@ -134,6 +139,12 @@ const PostPage: React.FC = () => {
   if (loading) return <p>Загрузка...</p>;
   if (!post) return <p>Пост не знайдено.</p>;
 
+  const shareUrl = `${window.location.origin}/posts/${postId}`;
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareUrl);
+    alert(' Адресу скопійовано в буфер обміну!');
+  };
+  
   return (
     <div className={styles.postContainer}>
       <div className={styles.postHeader}>
@@ -166,12 +177,30 @@ const PostPage: React.FC = () => {
           <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} />
           {countAllCommentsInList(comments)}
         </button>
+        <button className={styles.shareButton} onClick={() => setMenuVisible(!menuVisible)}>
+          <FaShareAlt />
+        </button>
+        {menuVisible && (
+          <div className={styles.shareMenu}>
+            <FacebookShareButton url={shareUrl}>
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+            <TwitterShareButton url={shareUrl}>
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+            <LinkedinShareButton url={shareUrl}>
+              <LinkedinIcon size={32} round />
+            </LinkedinShareButton>
+            <button onClick={copyToClipboard}>
+              <FaClipboard size={25} />
+            </button>
+          </div>
+        )}
       </div>
 
       {role !== '' &&
-        <div className={styles.commentInputContainer}>
-          <textarea
-            ref={textAreaRef}
+        <div>
+          <CommentEditor
             value={newCommentText}
             onChange={handleInputChange}
             onFocus={() => setIsInputFocused(true)}
@@ -194,6 +223,13 @@ const PostPage: React.FC = () => {
         onUpdateComment={handleUpdateComment}
         onDeleteComment={handleDeleteComment}
       />
+            onChange={setNewCommentText}
+            onSubmit={handleAddComment}
+            onCancel={() => setNewCommentText('')}
+          /> 
+        </div>
+      }
+      <CommentsList comments={sortedComments} onAddReply={handleAddReply} />
     </div>
   );
 };

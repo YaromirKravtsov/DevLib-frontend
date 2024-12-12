@@ -1,0 +1,206 @@
+.adminPage {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    margin-top: -70px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.content {
+    flex: 1;
+    padding: 10px -20px;
+}
+
+
+.title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 400; /* Regular */
+    color: #767676;
+    margin: 0; /* Забираємо зайві відступи */
+    text-align: left; /* Вирівнювання ліворуч */
+    display: flex;
+    justify-content: space-between;
+}
+
+/*.dateTitle {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #767676;
+    margin-left: -55px;*/ /* Відступ між "Користувачі" та "Дата створення" */
+/*}*/
+
+/* Дата створення у списку користувачів */
+/*.userDetails {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}*/
+
+/*.createdAt {
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    color: #767676;
+    margin-left: 10px;*/ /* Легкий відступ зліва для вирівнювання */
+    /*margin-right: 50px;*/ /* Відступ праворуч перед кнопками */
+    /*flex: 1;*/ /* Дозволить елементу зайняти простір між username та кнопками */
+    /*text-align: center;*/ /* Центруємо дату по горизонталі */
+/*}*/
+
+.usersList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.userItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    position: relative; /* Для точнішого позиціонування елементів */
+}
+
+.userImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.userName {
+    font-size: 20px;
+    font-family: 'Hahmlet', sans-serif;
+    font-weight: 400;
+    color: #000;
+    flex: 1; /* Це дозволить username зайняти вільний простір */
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.blockButton {
+    background-color: #CF2B31;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 200px; /* або конкретний розмір, якщо потрібно */
+    height: 40px; /* Зафіксована висота */
+}
+
+    .blockButton:hover {
+        background-color: #CF2B31;
+    }
+
+.moderatorButton {
+    background-color: #0B7DCF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 200px; /* або конкретний розмір, якщо потрібно */
+    height: 40px; /* Зафіксована висота */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .moderatorButton:hover {
+        background-color: #0A6BB2; /* Темніший колір при наведенні */
+    }
+
+    .moderatorButton:disabled {
+        background-color: #A4A4A4; /* Світліший колір для неактивної кнопки */
+        color: #ffffff;
+        cursor: not-allowed;
+
+    }
+
+.disabled {
+    background-color: #A4A4A4; /* Світліший колір */
+    cursor: not-allowed; /* Курсор для неактивної кнопки */
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 140px;
+    padding: 6px 0;
+    margin-top: 6px;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s, transform 0.3s ease;
+}
+
+    /* Випадаюче меню з'являється */
+    .dropdownMenu.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+.dropdownItem {
+    padding: 6px 12px;
+    font-size: 0.8em;
+    color: #333;
+    cursor: pointer;
+}
+
+    .dropdownItem:hover {
+        background-color: #f0f0f0;
+    }
+
+.dropdown {
+    position: relative;
+}
+
+.filterButton, .newPostButton {
+    padding: 4px 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    width: auto;
+    color: #A4A4A4; /* Додає сірий колір тексту */
+    text-decoration: none;
+}
+
+    /* Стиль для кнопки з трикутником */
+    .filterButton span {
+        display: inline-block;
+        margin-left: 4px;
+        transition: transform 0.3s ease; /* Анімація обертання */
+    }
+
+    .filterButton.open span {
+        transform: rotate(180deg); /* Обертання трикутника */
+    }
+

@@ -4,6 +4,7 @@ import styles from './BookManager.module.css';
 import AddRecordInputRow from '../../components/AddRecordInputRow/AddRecordInputRow';
 import ListEditor, { IListItem } from '../../components/ListEditor/ListEditor';
 import BlueButton from '../../UI/BlueButton/BlueButton';
+import RedButton from '../../UI/RedButton/RedButton';
 import { validateStringFields } from '../../helpers/checkStringFields';
 import { AddBookReq } from './api/req';
 import BookManagerService from './api/BookManagerService';
@@ -91,6 +92,17 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
     }
   };
 
+    const handleDelete = async () => {
+        if (window.confirm('Ви впевнені, що хочете видалити цю книгу?')) {
+            try {
+                await BookManagerService.deleteBook(String(bookId));
+                navigate('/books');
+            } catch (error) {
+                alert('Виникла помилка під час видалення книги');
+                console.error(error);
+            }
+        }
+    };
 
   const fetchBook = async () => {
     const { data } = await BookManagerService.getBook(String(bookId));
@@ -183,7 +195,10 @@ const BookManager: FC<BookManagerProps> = ({ action, bookId }) => {
       />
 
       <MySelect options={tags} value={selectedTag} onChange={setSelectedTag} placeholder='Оберіть тег' />
-      <BlueButton onClick={handleAction}>{action === 'create' ? 'Опублікувати' : 'Зберігти'}</BlueButton>
+          <div className={styles.buttons}>
+              <BlueButton onClick={handleAction}>{action === 'create' ? 'Опублікувати' : 'Зберігти'}</BlueButton>
+              {action === 'edit' && (<RedButton onClick={handleDelete} className={styles.deleteButton}> Видалити </RedButton>)}
+          </div>
     </div>
   );
 };

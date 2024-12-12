@@ -4,6 +4,8 @@ import { useHeaderStore } from '../../layouts/Header/store/header';
 import ReviewModal from './components/ReviewModal/ReviewModal';
 import DownloadModal from './components/DownloadModal/DownloadModal';
 import styles from './BookDetailsPage.module.css';
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon, PinterestIcon } from 'react-share';
+import { FaShareAlt, FaClipboard  } from 'react-icons/fa';
 import BookmarkIcon from './components/BookmarkIcon/BookmarkIcon';
 import BookService from './api/BookService';
 import { IBookDetails, IRewiew } from '../../models/IBookDetails';
@@ -28,6 +30,7 @@ const BookDetailsPage = () => {
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [tags, setTags] = useState<ITag[]>([]);
+    const [menuVisible, setMenuVisible] = useState(false);
     const userId = useAuthStore(store => store.userId);
     const role = useAuthStore(store => store.role);
 
@@ -144,7 +147,11 @@ const BookDetailsPage = () => {
         }
     };
 
-
+    const shareUrl = `${window.location.origin}/books/${bookId}`;
+    const copyToClipboard = () => {
+      navigator.clipboard.writeText(shareUrl);
+      alert(' Адресу скопійовано в буфер обміну!');
+    };
 
 
     if (error) {
@@ -162,7 +169,38 @@ const BookDetailsPage = () => {
                 isBookmarked={isBookmarked}
                 onToggleBookmark={toggleBookmark}
             />
-         
+      <div className={styles.sharePanel}>
+    <button
+        className={styles.shareButton}
+        onClick={() => setMenuVisible(!menuVisible)}
+    >
+        <FaShareAlt />
+    </button>
+    {menuVisible && (
+        <ul className={styles.shareMenu}>
+            <li>
+                <FacebookShareButton url={shareUrl}>
+                    <FacebookIcon size={48} round />
+                </FacebookShareButton>
+            </li>
+            <li>
+                <TwitterShareButton url={shareUrl}>
+                    <TwitterIcon size={48} round />
+                </TwitterShareButton>
+            </li>
+            <li>
+                <LinkedinShareButton url={shareUrl}>
+                    <LinkedinIcon size={48} round />
+                </LinkedinShareButton>
+            </li>
+            <li>
+                <button onClick={copyToClipboard}>
+                    <FaClipboard size={35} />
+                </button>
+            </li>
+        </ul>
+    )}
+</div>
             {bookDetails.bookImg ? (
                 <img
                     src={'http://localhost:3200' + bookDetails.bookImg}
@@ -189,8 +227,10 @@ const BookDetailsPage = () => {
                 </div>
 
                 <div className={styles.buttons}>
+                <div className={styles.topButtons}>
                     <button className={styles.readButton} onClick={handleReadOnline}>Читати онлайн</button>
                     <button className={styles.downloadButton} onClick={openDownloadModal}>Завантажити у форматі...</button>
+                </div>
                 </div>
             </div>
 

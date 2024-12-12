@@ -5,6 +5,7 @@ import RecordType from '../../../components/RecordType/RecordType';
 import useDirectoryManagerStore, { IArticle } from '../store/directoryManeger';
 import ListEditor, { IListItem } from '../../../components/ListEditor/ListEditor';
 import BlueButton from '../../../UI/BlueButton/BlueButton';
+import RedButton from '../../../UI/RedButton/RedButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import DirectoryManagerService from '../api/DirectoryManagerService';
 
@@ -77,6 +78,17 @@ const DirectoryPage: FC<DirectoryPageProps> = ({ action }) => {
         navigate(`/reference/${directoryId}`);
     };
 
+    const handleDelete = async () => {
+        try {
+            if (directoryId) {
+                await DirectoryManagerService.deleteDirectory(directoryId); // Новий метод у DirectoryManagerService
+                navigate('/directories'); // Переходьте на сторінку списку довідників
+            }
+        } catch (error) {
+            console.error('Failed to delete directory:', error);
+        }
+    };
+
     const handleAction = () => {
         if (action === 'create') {
             handleCreate();
@@ -118,9 +130,15 @@ const DirectoryPage: FC<DirectoryPageProps> = ({ action }) => {
                 type="article"
                 isArticleEdit={action === 'edit'}
             />
+            <div className={styles.buttons}>
             <BlueButton onClick={handleAction}>
                 {action === 'create' ? 'Опублікувати' : 'Зберігти'}
             </BlueButton>
+            {action === 'edit' && (
+                <RedButton onClick={handleDelete} className={styles.deleteButton}>
+                    Видалити
+                    </RedButton>)}
+            </div>
         </div>
     );
 };
