@@ -110,3 +110,20 @@
   padding: 15px;
   background-color: #fff;
 }
+.editContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.editInput {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.editActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

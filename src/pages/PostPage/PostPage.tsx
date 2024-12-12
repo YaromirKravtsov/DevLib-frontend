@@ -13,7 +13,6 @@ import { formatDate } from '../../helpers/formatDate';
 import CommentsList from './CommentsList/CommentsList';
 
 
-
 const useUserId = () => {
   return useAuthStore(state => state.userId);
 };
@@ -26,27 +25,27 @@ const PostPage: React.FC = () => {
   const [comments, setComments] = useState<ICommentItem[]>([]);
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
-  const [newCommentText, setNewCommentText] = useState<string>("");
+  const [newCommentText, setNewCommentText] = useState<string>('');
   const userId = useUserId();
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const navigate = useNavigate();
-  const role = useAuthStore(store => store.role)
+  const role = useAuthStore(store => store.role);
+
+  // Завантаження поста та коментарів
   const fetchPost = async () => {
     try {
       setLoading(true);
       const { data } = await PostPageService.getPost(postId!);
-      console.log(data)
-      setComments(data.comments)
+      setComments(data.comments);
       setPost(data);
     } catch (error) {
-      console.error("Ошибка при загрузке поста:", error);
+      console.error('Ошибка при загрузке поста:', error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-
     fetchPost();
   }, [postId]);
 
@@ -64,44 +63,76 @@ const PostPage: React.FC = () => {
 
   const handleAddComment = async () => {
     if (!newCommentText.trim()) {
-      alert('Заповніть поле коментаря!')
-      return
-    };
-    console.log({
-      userId, text: newCommentText, postId: String(postId)
-    })
+      alert('Заповніть поле коментаря!');
+      return;
+    }
+
     try {
       await PostPageService.createComment({
-        userId, text: newCommentText, postId: String(postId)
-      })
+        userId,
+        text: newCommentText,
+        postId: String(postId),
+      });
       await fetchPost();
     } catch (error) {
-      console.log(error)
+      console.error('Ошибка при добавлении комментария:', error);
     }
 
     setNewCommentText('');
   };
 
   const handleAddReply = async (commentId: string, text: string) => {
-    console.log(commentId, text);
-    await PostPageService.createReplyComment({
-      commentId, text, userId
-    })
-
-    await fetchPost();
-    setNewCommentText('');
+    try {
+      await PostPageService.createReplyComment({
+        commentId,
+        text,
+        userId,
+      });
+      await fetchPost();
+      setNewCommentText('');
+    } catch (error) {
+      console.error('Ошибка при ответе на комментарий:', error);
+    }
   };
 
+  const handleUpdateComment = async (commentId: string, updatedText: string) => {
+    try {
+      await PostPageService.updateComment({
+        comment_id: commentId,  
+        text: updatedText,
+        userId,
+      });
+      await fetchPost();
+    } catch (error) {
+      console.error('Ошибка обновления комментария:', error);
+    }
+  };
+ 
+  const handleDeleteComment = async (comment_id: string) => {
+    try {
+      
+      await PostPageService.deleteComment(comment_id);
+      await fetchPost();  
+      console.log('Коментар успішно видалено');
+    } catch (error: any) {
+      console.error('Помилка видалення коментаря:', error.message);
+      console.error('Response data from server:', error.response?.data);
+    }
+  };
+  
+  
+  
+  
   const countAllCommentsInList = (comments: ICommentItem[]): number => {
     return comments.reduce((total, comment) => total + countAllComments(comment), 0);
   };
+
   const countAllComments = (comment: ICommentItem): number => {
-    // Считаем текущий комментарий (1) + вложенные комментарии
     return 1 + (comment.comments?.reduce((total, nestedComment) => total + countAllComments(nestedComment), 0) || 0);
   };
 
   if (loading) return <p>Загрузка...</p>;
-  if (!post) return <p>Пост не найден.</p>;
+  if (!post) return <p>Пост не знайдено.</p>;
 
   return (
     <div className={styles.postContainer}>
@@ -112,7 +143,7 @@ const PostPage: React.FC = () => {
         <div className={styles.userIcon}>
           {post.authorImg ? (
             <img
-              src={authorImg + post.authorImg}
+              src={`${authorImg}${post.authorImg}`}
               alt={post.authorName}
               className={styles.userImage}
             />
@@ -122,16 +153,21 @@ const PostPage: React.FC = () => {
           <span><b>{post.authorName}</b> • {formatDate(post.dateTime)}</span>
         </div>
       </div>
+
       <h2 className={styles.postTitle}>{post.postName}</h2>
+
       <div
         className={`${styles.articleText} custom-text`}
-        dangerouslySetInnerHTML={{ __html: post.text ? post.text : 'Тут буде контент статті' }}
+        dangerouslySetInnerHTML={{ __html: post.text || 'Тут буде контент статті' }}
       />
+
       <div className={styles.postFooter}>
         <button className={styles.iconButton} onClick={() => { }}>
-          <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} /> {countAllCommentsInList(comments)}
+          <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} />
+          {countAllCommentsInList(comments)}
         </button>
       </div>
+
       {role !== '' &&
         <div className={styles.commentInputContainer}>
           <textarea
@@ -139,18 +175,25 @@ const PostPage: React.FC = () => {
             value={newCommentText}
             onChange={handleInputChange}
             onFocus={() => setIsInputFocused(true)}
-            placeholder="Напишите комментарий..."
+            placeholder="Напишіть коментар..."
             className={styles.commentInput}
           />
           {isInputFocused && (
             <div className={styles.commentActions}>
-              <button onClick={handleAddComment} className={styles.sendButton}>Отправить</button>
-              <button onClick={() => setIsInputFocused(false)} className={styles.cancelButton}>Отмена</button>
+              <button onClick={handleAddComment} className={styles.sendButton}>Відправити</button>
+              <button onClick={() => setIsInputFocused(false)} className={styles.cancelButton}>Скасувати</button>
             </div>
           )}
         </div>
       }
-      <CommentsList comments={comments} onAddReply={handleAddReply} />
+
+
+      <CommentsList
+        comments={comments}
+        onAddReply={handleAddReply}
+        onUpdateComment={handleUpdateComment}
+        onDeleteComment={handleDeleteComment}
+      />
     </div>
   );
 };

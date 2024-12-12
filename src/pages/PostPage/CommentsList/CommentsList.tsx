@@ -1,30 +1,32 @@
 import { ICommentItem } from "../../../app/models/ICommentItem";
 import Comment from "../../../components/Comment/Comment";
 
-// Интерфейс для комментария
-interface CommentType {
-  commentId: string; // Уникальный идентификатор комментария
-  text: string;      // Текст комментария
-  comments: ICommentItem[]; // Вложенные комментарии
-}
 
-
-
-// Пропсы для компонента CommentWithReplies
 interface CommentWithRepliesProps {
   comment: ICommentItem;
-  onAddReply: (commentId: string, text: string) => void
-  onUserClick?: (userId: string) => void;
+  onAddReply: (commentId: string, text: string) => void;
+  onUpdateComment: (commentId: string, text: string) => void;
+  onDeleteComment: (commentId: string) => void; 
 }
 
-// Компонент для рендера комментария с вложениями
-const CommentWithReplies: React.FC<CommentWithRepliesProps> = ({ comment, onAddReply }) => {
+
+const CommentWithReplies: React.FC<CommentWithRepliesProps> = ({
+  comment,
+  onAddReply,
+  onUpdateComment,
+  onDeleteComment
+}) => {
   return (
     <div>
-      {/* Рендер текущего комментария */}
-      <Comment comment={comment} onAddReply={onAddReply} />
       
-      {/* Если есть вложенные комментарии, рендерим их */}
+      <Comment
+        comment={comment}
+        onAddReply={onAddReply}
+        onUpdateComment={onUpdateComment}
+        onDeleteComment={onDeleteComment} 
+      />
+
+      {/* Якщо є вкладені коментарі, рендеримо їх */}
       {comment.comments && comment.comments.length > 0 && (
         <div style={{ marginLeft: 30 }}>
           {comment.comments.map((replyComment) => (
@@ -32,6 +34,8 @@ const CommentWithReplies: React.FC<CommentWithRepliesProps> = ({ comment, onAddR
               key={replyComment.commentId}
               comment={replyComment}
               onAddReply={onAddReply}
+              onUpdateComment={onUpdateComment}
+              onDeleteComment={onDeleteComment} 
             />
           ))}
         </div>
@@ -40,18 +44,30 @@ const CommentWithReplies: React.FC<CommentWithRepliesProps> = ({ comment, onAddR
   );
 };
 
-// Пропсы для компонента CommentsList
+
 interface CommentsListProps {
   comments: ICommentItem[];
-  onAddReply: (commentId: string, text: string) => void
+  onAddReply: (commentId: string, text: string) => void;
+  onUpdateComment: (commentId: string, text: string) => void;
+  onDeleteComment: (commentId: string) => void; 
 }
 
-// Компонент списка комментариев
-const CommentsList: React.FC<CommentsListProps> = ({ comments, onAddReply }) => {
+const CommentsList: React.FC<CommentsListProps> = ({
+  comments,
+  onAddReply,
+  onUpdateComment,
+  onDeleteComment
+}) => {
   return (
     <div>
       {comments.map((comment) => (
-        <CommentWithReplies key={comment.commentId} comment={comment} onAddReply={onAddReply} />
+        <CommentWithReplies
+          key={comment.commentId}
+          comment={comment}
+          onAddReply={onAddReply}
+          onUpdateComment={onUpdateComment}
+          onDeleteComment={onDeleteComment} 
+        />
       ))}
     </div>
   );
