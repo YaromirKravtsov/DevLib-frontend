@@ -3,3 +3,11 @@
     flex-direction: column;
     row-gap: 23px;
 }
+
+.buttons {
+    display: flex;
+    gap: 10px; /* Проміжок між кнопками */
+    justify-content: flex-start; /* Вирівнювання кнопок зліва */
+    align-items: center; /* Вирівнювання по вертикалі */
+    margin-top: 20px; /* Відступ зверху */
+}
