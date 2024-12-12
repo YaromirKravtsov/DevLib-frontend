@@ -41,6 +41,10 @@ export default class BookManagerService {
             data: dto,
         });
     }
-    
+
+    static async deleteBook(bookId: string): Promise<AxiosResponse> {
+        return $api.delete(`/book/delete-book/${bookId}`);
+    }
+
     
 }

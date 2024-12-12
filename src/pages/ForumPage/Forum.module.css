@@ -90,13 +90,12 @@
     gap: 16px;
     overflow-y: auto;
   }
-  
-  .post {
+
+.post {
     padding: 12px;
-    border-bottom: 1px solid #ccc;
     display: flex;
     flex-direction: column;
-  }
+}
   
   .author {
     display: flex;
@@ -129,4 +128,28 @@
     font-size: 0.8em;
     margin-top: 4px;
   }
-  
+
+.postWithDelete {
+    display: flex;
+    justify-content: space-between; /* Розміщує пости з кнопкою справа */
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 12px;
+    width: 100%; /* Забезпечуємо 100% ширини */
+}
+
+.deletePostButton {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-left: auto;
+    max-width: 150px; /* Обмежуємо максимальну ширину */
+}
+
+    .deletePostButton:hover {
+        background-color: darkred;
+    }

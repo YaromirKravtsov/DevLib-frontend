@@ -7,5 +7,12 @@ export default class ForumPageService {
     const response: AxiosResponse<IForumPost[]> = await $api.get('post'); 
     console.log(response.data);
     return response.data;
-  }
+    }
+
+    // Метод для видалення поста
+    static async deletePost(postId: number): Promise<void> {
+        await $api.delete(`/post/${postId}`);
+    }
 }
+
+
