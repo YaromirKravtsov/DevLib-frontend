@@ -8,7 +8,7 @@ export interface CreatePostDto {
 }
 
 export class CreatePostServoce{
-    static async createPost(dto: CreatePostDto):Promise<AxiosResponse<string>>{
+    static async createPost(dto: FormData):Promise<AxiosResponse<string>>{
         return $api.post('/post',dto)
     }
 }

@@ -4,12 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IDirectoryItem } from '../../models/IDirectoryItem';
 import EditItemButton from '../../UI/EditItemButton/EditItemButton';
 import { useAuthStore } from '../../app/store/auth';
+import { staticUrl } from '../../constants/staticLink';
 
 interface DirectorItemProps {
   directory: IDirectoryItem
 }
 const DirectorItem: FC<DirectorItemProps> = ({ directory }) => {
-  const staticUrl = process.env.STATIC_URL || 'http://localhost:3200/';
   const role = useAuthStore(store => store.role)
   const navigate = useNavigate()
   const handleEdit = () => {

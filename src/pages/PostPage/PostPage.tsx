@@ -12,6 +12,8 @@ import CommentEditor from '../../components/CommentEditor/CommentEditor';
 import { formatDate } from '../../helpers/formatDate';
 import CommentsList from './CommentsList/CommentsList';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
+import { staticUrl } from '../../constants/staticLink';
+import Viewer from 'react-viewer';
 
 
 const useUserId = () => {
@@ -32,7 +34,7 @@ const PostPage: React.FC = () => {
   const [comment, setComment] = useState('');
   const navigate = useNavigate();
   const role = useAuthStore(store => store.role);
-
+  const [visible, setVisible] = useState(false);
   // Завантаження поста та коментарів
   const sortedComments = comments.sort((a, b) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime());
   const [menuVisible, setMenuVisible] = useState(false);
@@ -138,12 +140,13 @@ const PostPage: React.FC = () => {
   if (loading) return <p>Загрузка...</p>;
   if (!post) return <p>Пост не знайдено.</p>;
 
-  const shareUrl = `${window.location.origin}/posts/${postId}`;
+  const shareUrl = `${window.location.origin}/post/${postId}`;
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shareUrl);
     alert(' Адресу скопійовано в буфер обміну!');
   };
-  
+
+
   return (
     <div className={styles.postContainer}>
       {/* Заголовок посту */}
@@ -173,7 +176,14 @@ const PostPage: React.FC = () => {
         className={`${styles.articleText} custom-text`}
         dangerouslySetInnerHTML={{ __html: post.text || 'Тут буде контент статті' }}
       />
+    <img className = {styles.img} src={staticUrl + post.imgLink} alt=""onClick={() => setVisible(true)} />
+    <Viewer
+        visible={visible}
+        onClose={() => setVisible(false)}
+        images={[{ src: staticUrl + post.imgLink, alt: 'Photo' }]}
+      />
   
+    
       <div className={styles.postFooter}>
         <button className={styles.iconButton} onClick={() => { }}>
           <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} />

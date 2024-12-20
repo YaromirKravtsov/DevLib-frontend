@@ -130,3 +130,16 @@ body {
     border-left: 5px solid #555;
     background-color: #f9f9f9;
 }
+
+.react-viewer-toolbar{
+    display: flex;
+    justify-content: center;
+}
+.react-viewer-btn{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+.react-viewer-icon{
+    margin: auto;
+}
