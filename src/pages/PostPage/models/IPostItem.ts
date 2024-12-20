@@ -10,4 +10,5 @@ export interface IPostItem {
     authorName: string;
     authorImg: string;
     commentsQuantity: [];
+    imgLink:string;
 }

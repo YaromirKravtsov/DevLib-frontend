@@ -12,6 +12,7 @@ import CommentEditor from '../../components/CommentEditor/CommentEditor';
 import { formatDate } from '../../helpers/formatDate';
 import CommentsList from './CommentsList/CommentsList';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
+import { staticUrl } from '../../constants/staticLink';
 
 
 const useUserId = () => {
@@ -173,7 +174,7 @@ const PostPage: React.FC = () => {
         className={`${styles.articleText} custom-text`}
         dangerouslySetInnerHTML={{ __html: post.text || 'Тут буде контент статті' }}
       />
-  
+    <img className = {styles.img} src={staticUrl + post.imgLink} alt="" />
       <div className={styles.postFooter}>
         <button className={styles.iconButton} onClick={() => { }}>
           <img src={commentIcon} alt="Comment Icon" className={styles.commentIcon} />
