@@ -13,6 +13,7 @@ const CreatePost = () => {
     const userId = useAuthStore(store => store.userId)
     const naviagte = useNavigate();
     const [file,setFile] = useState<File | null>()
+    
     const handleSetFile = (file: File | null) => {
         setFile(file);
     };
